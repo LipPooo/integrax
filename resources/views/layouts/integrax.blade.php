@@ -7,8 +7,9 @@
 
     <title>@yield('title', 'Integrax Berhad') — Powering Sustainable Infrastructure</title>
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:300,400,500,600,700,800" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="{{ asset('media/images/hero-poster.jpg') }}" fetchpriority="high">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')

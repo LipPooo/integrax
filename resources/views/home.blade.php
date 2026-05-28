@@ -42,7 +42,7 @@
         <div class="site-header-glow pointer-events-none absolute inset-x-0 top-0 h-full" aria-hidden="true"></div>
         <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-8 py-6 lg:px-14 lg:py-7">
             <a href="#" class="site-header-logo group flex items-center gap-5">
-                <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-105" />
+                <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-105" fetchpriority="high" decoding="async" />
             </a>
 
             <nav class="hidden items-center gap-12 lg:flex" aria-label="Primary">
@@ -100,7 +100,6 @@
                 poster="{{ asset('media/images/hero-poster.jpg') }}"
             >
                 <source src="{{ asset('media/videos/hero-primary.mp4') }}" type="video/mp4">
-                <source src="{{ asset('media/videos/hero-fallback.mp4') }}" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-linear-to-r from-integrax-blue via-integrax-blue/75 to-integrax-blue/40"></div>
             <div class="absolute inset-0 bg-linear-to-t from-integrax-blue via-integrax-blue/30 to-transparent"></div>
@@ -326,7 +325,7 @@
             <div class="grid gap-16 lg:grid-cols-12">
                 <div class="lg:col-span-5">
                     <a href="#" class="flex items-center gap-5">
-                        <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain" />
+                        <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain" loading="lazy" decoding="async" />
                     </a>
                     <p class="mt-8 max-w-sm text-sm leading-relaxed text-white/55 md:text-base">
                         Powering sustainable infrastructure for Malaysia and beyond — marine services, critical infrastructure, and integrated energy solutions.

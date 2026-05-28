@@ -196,7 +196,7 @@ function initParticles() {
         return;
     }
 
-    const count = window.innerWidth < 768 ? 18 : 36;
+    const count = window.innerWidth < 768 ? 10 : 20;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -518,7 +518,7 @@ function initNetworkParticles() {
         return;
     }
 
-    const count = window.innerWidth < 768 ? 12 : 24;
+    const count = window.innerWidth < 768 ? 6 : 12;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -1154,7 +1154,7 @@ function spawnAboutParticles() {
     const container = document.getElementById('about-particles');
     if (!container || prefersReducedMotion) return;
 
-    const count = window.innerWidth < 768 ? 28 : 55;
+    const count = window.innerWidth < 768 ? 16 : 30;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
