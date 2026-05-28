@@ -1432,6 +1432,190 @@ function initAboutOverlay() {
     });
 }
 
+function initLeadership() {
+    const grid = document.getElementById('leadership-grid');
+    if (!grid) return;
+
+    const modal      = document.getElementById('ldg-bio-modal');
+    const backdrop   = document.getElementById('ldg-modal-backdrop');
+    const panel      = document.getElementById('ldg-modal-panel');
+    const closeBtn   = document.getElementById('ldg-modal-close');
+    const modalAvatar= document.getElementById('ldg-modal-avatar');
+    const modalInit  = document.getElementById('ldg-modal-initials');
+    const modalDept  = document.getElementById('ldg-modal-dept');
+    const modalName  = document.getElementById('ldg-modal-name');
+    const modalTitle = document.getElementById('ldg-modal-title');
+    const modalBio   = document.getElementById('ldg-modal-bio');
+
+    const dataScript = document.getElementById('ldg-exec-data');
+    if (!dataScript) return;
+
+    let execData;
+    try {
+        execData = JSON.parse(dataScript.textContent);
+    } catch {
+        return;
+    }
+
+    let isOpen   = false;
+    let openTl   = null;
+    let closeTl  = null;
+    const isMobile = () => window.innerWidth < 768;
+
+    // ── Card stagger reveal ────────────────────────────────────
+    if (!prefersReducedMotion) {
+        const cards = grid.querySelectorAll('.ldg-card');
+        gsap.from(cards, {
+            autoAlpha: 0,
+            y: 56,
+            duration: 0.9,
+            stagger: 0.1,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '#leadership-grid',
+                start: 'top 82%',
+                toggleActions: 'play none none none',
+            },
+        });
+    }
+
+    // ── Populate and open modal ────────────────────────────────
+    function openModal(index) {
+        if (isOpen) return;
+        const exec = execData[index];
+        if (!exec) return;
+
+        isOpen = true;
+        closeTl?.kill();
+
+        // Populate sidebar
+        modalAvatar.className = `ldg-modal-avatar ${exec.avatarClass}`;
+        modalInit.textContent  = exec.initials;
+        modalDept.textContent  = exec.department;
+        modalName.textContent  = exec.name;
+        modalTitle.textContent = exec.title;
+
+        // Populate bio content
+        if (exec.hasBio && exec.bio) {
+            modalBio.innerHTML = exec.bio;
+        } else {
+            modalBio.innerHTML = `
+                <div class="ldg-modal-no-bio">
+                    <div class="ldg-modal-no-bio-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <p class="ldg-modal-no-bio-title">${exec.name}</p>
+                    <p class="ldg-modal-no-bio-text">Full executive profile and biography coming soon.</p>
+                    <a href="https://integrax.com.my/management-team/" target="_blank" rel="noopener noreferrer" class="ldg-modal-no-bio-link">
+                        Official website
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10"/></svg>
+                    </a>
+                </div>`;
+        }
+
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        lenis?.stop();
+
+        if (prefersReducedMotion) {
+            gsap.set([backdrop, panel], { autoAlpha: 1 });
+            if (isMobile()) gsap.set(panel, { y: 0 });
+            else            gsap.set(panel, { x: 0 });
+            return;
+        }
+
+        gsap.set(backdrop, { autoAlpha: 0 });
+        if (isMobile()) {
+            gsap.set(panel, { y: '100%', autoAlpha: 1 });
+        } else {
+            gsap.set(panel, { x: '100%', autoAlpha: 1 });
+        }
+
+        openTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        openTl.to(backdrop, { autoAlpha: 1, duration: 0.4 });
+
+        if (isMobile()) {
+            openTl.to(panel, { y: 0, duration: 0.55, ease: 'cubic.out' }, '-=0.25');
+        } else {
+            openTl.to(panel, { x: 0, duration: 0.55, ease: 'cubic.out' }, '-=0.25');
+        }
+    }
+
+    function closeModal() {
+        if (!isOpen) return;
+        isOpen = false;
+        openTl?.kill();
+
+        if (prefersReducedMotion) {
+            gsap.set([backdrop, panel], { autoAlpha: 0 });
+            modal.hidden = true;
+            document.body.style.overflow = '';
+            lenis?.start();
+            return;
+        }
+
+        closeTl = gsap.timeline({
+            onComplete: () => {
+                modal.hidden = true;
+                document.body.style.overflow = '';
+                lenis?.start();
+            },
+        });
+
+        if (isMobile()) {
+            closeTl.to(panel, { y: '100%', duration: 0.42, ease: 'power3.in' });
+        } else {
+            closeTl.to(panel, { x: '100%', duration: 0.42, ease: 'power3.in' });
+        }
+        closeTl.to(backdrop, { autoAlpha: 0, duration: 0.3 }, '-=0.2');
+    }
+
+    // ── Wire open buttons ──────────────────────────────────────
+    document.querySelectorAll('.js-ldg-open').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const index = parseInt(btn.dataset.execIndex, 10);
+            openModal(index);
+        });
+    });
+
+    // ── Wire close handlers ────────────────────────────────────
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) closeModal();
+    });
+
+    // ── Hover magnetic effect on cards ────────────────────────
+    if (!prefersReducedMotion) {
+        grid.querySelectorAll('.ldg-card').forEach((card) => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width  - 0.5;
+                const y = (e.clientY - rect.top)  / rect.height - 0.5;
+                gsap.to(card, {
+                    rotateY: x * 5,
+                    rotateX: -y * 4,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                    transformPerspective: 900,
+                    overwrite: 'auto',
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotateY: 0, rotateX: 0,
+                    duration: 0.6, ease: 'power3.out',
+                    overwrite: 'auto',
+                });
+            });
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const runSafe = (name, fn) => {
         try {
@@ -1455,6 +1639,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runSafe('JourneyTimeline', initJourneyTimeline);
     runSafe('Announcements', initAnnouncements);
     runSafe('AboutOverlay', initAboutOverlay);
+    runSafe('Leadership', initLeadership);
 
     try {
         ScrollTrigger.refresh();

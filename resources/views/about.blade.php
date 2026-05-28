@@ -468,6 +468,7 @@
                     <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-integrax-blue-light">Company</p>
                     <ul class="mt-5 space-y-3 text-sm text-white/65">
                         <li><a href="/about" class="transition hover:text-white">About Integrax</a></li>
+                        <li><a href="/leadership" class="transition hover:text-white">Leadership Team</a></li>
                         <li><a href="/#stats" class="transition hover:text-white">Track Record</a></li>
                         <li><a href="/#segments" class="transition hover:text-white">Business Segments</a></li>
                         <li><a href="/#journey" class="transition hover:text-white">Our Journey</a></li>
