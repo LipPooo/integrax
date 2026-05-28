@@ -14,7 +14,7 @@
         class="announcement-toast"
         data-announcement-id="{{ $ann['id'] }}"
         data-delay="{{ ($ann['delay'] ?? 3) + ($index * 0.4) }}"
-        data-auto-hide="{{ $ann['auto_hide'] ?? 8 }}"
+        data-auto-hide="{{ $ann['auto_hide'] ?? 30 }}"
         role="alertdialog"
         aria-labelledby="ann-title-{{ $ann['id'] }}"
         aria-describedby="ann-desc-{{ $ann['id'] }}"
@@ -71,4 +71,18 @@
     </article>
     @endforeach
 </div>{{-- /#announcement-hub --}}
+
+{{-- Floating reminder buttons — appear after each toast auto-dismisses or is closed --}}
+@foreach($active as $ann)
+<button
+    id="ann-remind-{{ $ann['id'] }}"
+    class="ann-remind-btn"
+    aria-label="View announcement: {{ $ann['title'] }}"
+    hidden
+>
+    <span class="ann-remind-btn__dot" aria-hidden="true"></span>
+    <span>{{ $ann['label'] ?? 'Announcement' }}</span>
+</button>
+@endforeach
+
 @endif

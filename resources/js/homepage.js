@@ -1031,94 +1031,125 @@ function initAnnouncements() {
     const toasts = Array.from(hub.querySelectorAll('.announcement-toast'));
     if (!toasts.length) return;
 
-    // Hidden off-screen right + blurred — GSAP takes over visibility
     gsap.set(toasts, { x: 400, autoAlpha: 0, filter: 'blur(12px)' });
 
     toasts.forEach((toast) => {
         const slideDelay  = Number(toast.dataset.delay)    || 3;
-        const autoHide    = Number(toast.dataset.autoHide) || 8;
+        const autoHide    = Number(toast.dataset.autoHide) || 30;
+        const annId       = toast.dataset.announcementId;
         const progressBar = toast.querySelector('.announcement-toast__progress-bar');
         const closeBtn    = toast.querySelector('.js-ann-close');
+        const ctaLink     = toast.querySelector('.announcement-toast__cta');
+
+        // Mutable refs so all handlers always point to current tweens
+        const state = { floatTween: null, progressTl: null };
 
         gsap.set(progressBar, { scaleX: 1, transformOrigin: 'left center' });
 
         // — Entrance —
         const enterTl = gsap.timeline({ delay: slideDelay });
-
         if (!prefersReducedMotion) {
             enterTl
-                .to(toast, {
-                    x: 0,
-                    autoAlpha: 1,
-                    filter: 'blur(0px)',
-                    duration: 0.8,
-                    ease: 'power3.out',
-                })
-                .from(
-                    toast.querySelector('.announcement-toast__card'),
-                    { scale: 0.94, duration: 0.65, ease: 'back.out(1.5)' },
-                    '<',
-                );
+                .to(toast, { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' })
+                .from(toast.querySelector('.announcement-toast__card'), { scale: 0.94, duration: 0.65, ease: 'back.out(1.5)' }, '<');
         } else {
             enterTl.to(toast, { autoAlpha: 1, duration: 0.4, x: 0, filter: 'blur(0px)' });
         }
 
-        // — Idle float —
-        const floatTween = gsap.to(toast, {
-            y: -7,
-            duration: 3,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1,
-            paused: true,
-        });
+        // — Idle float (starts after entrance) —
         enterTl.eventCallback('onComplete', () => {
-            if (!prefersReducedMotion) floatTween.play();
+            if (!prefersReducedMotion) {
+                state.floatTween = gsap.to(toast, { y: -7, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+            }
         });
 
-        // — Auto-hide progress bar —
-        const progressTl = gsap.timeline({
+        // — Auto-hide progress bar (30 s) —
+        state.progressTl = gsap.timeline({
             delay: slideDelay + 0.8,
-            onComplete: () => dismissAnnouncement(toast, floatTween, progressTl),
+            onComplete: () => hideToast(toast, annId, state),
         });
-        progressTl.to(progressBar, { scaleX: 0, duration: autoHide, ease: 'none' });
+        state.progressTl.to(progressBar, { scaleX: 0, duration: autoHide, ease: 'none' });
 
         // — Hover: pause / resume —
         toast.addEventListener('mouseenter', () => {
-            progressTl.pause();
-            floatTween.pause();
+            state.progressTl?.pause();
+            state.floatTween?.pause();
             gsap.to(toast, { scale: 1.018, duration: 0.3, ease: 'power2.out' });
         });
         toast.addEventListener('mouseleave', () => {
-            progressTl.resume();
-            if (!prefersReducedMotion) floatTween.resume();
+            state.progressTl?.resume();
+            if (!prefersReducedMotion) state.floatTween?.resume();
             gsap.to(toast, { scale: 1, duration: 0.3, ease: 'power2.out' });
         });
 
-        // — Manual close —
+        // — Manual close: slide out, show remind button —
         closeBtn?.addEventListener('click', () => {
-            progressTl.kill();
-            dismissAnnouncement(toast, floatTween, progressTl);
+            state.progressTl?.kill();
+            state.progressTl = null;
+            hideToast(toast, annId, state);
+        });
+
+        // — CTA click: let link navigate, remove toast + remind button permanently —
+        ctaLink?.addEventListener('click', () => {
+            state.floatTween?.kill();
+            state.progressTl?.kill();
+            gsap.to(toast, {
+                x: 400, autoAlpha: 0, filter: 'blur(10px)', duration: 0.35, ease: 'power3.in',
+                onComplete: () => {
+                    toast.remove();
+                    if (!hub.querySelector('.announcement-toast')) hub.remove();
+                    document.getElementById(`ann-remind-${annId}`)?.remove();
+                },
+            });
+        });
+
+        // — Remind button click: re-show toast without auto-hide —
+        const remindBtn = document.getElementById(`ann-remind-${annId}`);
+        remindBtn?.addEventListener('click', () => {
+            gsap.to(remindBtn, {
+                x: 80, autoAlpha: 0, duration: 0.3, ease: 'power2.in',
+                onComplete: () => { remindBtn.hidden = true; },
+            });
+
+            gsap.set(toast, { x: 400, y: 0, scale: 1, autoAlpha: 0, filter: 'blur(12px)', pointerEvents: 'auto' });
+            const reEnterTl = gsap.timeline();
+            if (!prefersReducedMotion) {
+                reEnterTl
+                    .to(toast, { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' })
+                    .from(toast.querySelector('.announcement-toast__card'), { scale: 0.94, duration: 0.5, ease: 'back.out(1.5)' }, '<');
+            } else {
+                reEnterTl.to(toast, { autoAlpha: 1, duration: 0.3, x: 0, filter: 'blur(0px)' });
+            }
+            reEnterTl.eventCallback('onComplete', () => {
+                if (!prefersReducedMotion) {
+                    state.floatTween = gsap.to(toast, { y: -7, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+                }
+            });
         });
     });
 }
 
-function dismissAnnouncement(toast, floatTween, progressTl) {
-    floatTween?.kill();
-    progressTl?.kill();
+function hideToast(toast, annId, state) {
+    state.floatTween?.kill();
+    state.floatTween = null;
 
     gsap.to(toast, {
-        x: 400,
-        autoAlpha: 0,
-        filter: 'blur(10px)',
-        duration: 0.45,
-        ease: 'power3.in',
+        x: 400, autoAlpha: 0, filter: 'blur(10px)', duration: 0.45, ease: 'power3.in',
         onComplete: () => {
-            toast.remove();
-            const hub = document.getElementById('announcement-hub');
-            if (hub && !hub.querySelector('.announcement-toast')) hub.remove();
+            gsap.set(toast, { pointerEvents: 'none' });
+            showRemindButton(annId);
         },
     });
+}
+
+function showRemindButton(annId) {
+    const btn = document.getElementById(`ann-remind-${annId}`);
+    if (!btn) return;
+    btn.hidden = false;
+    gsap.fromTo(btn,
+        { x: 80, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.55, ease: 'power3.out' },
+    );
 }
 
 function spawnAboutParticles() {

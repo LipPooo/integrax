@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
                 'location'     => 'Kuala Lumpur Convention Centre (KLCC), Malaysia',
                 'cta_label'    => 'Learn More',
                 'cta_url'      => '/announcements/etcon-2026',
-                'auto_hide'    => 8,
+                'auto_hide'    => 30,
                 'delay'        => 3,
                 'active'       => true,
             ],

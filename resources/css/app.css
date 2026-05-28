@@ -864,6 +864,56 @@
     .ann-hero {
         background-color: var(--color-integrax-blue);
     }
+
+    /* ── Floating reminder button ── */
+    .ann-remind-btn {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        z-index: 8999;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.55rem 1.1rem 0.55rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 30%, transparent);
+        background: var(--color-integrax-blue-deep);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        pointer-events: auto;
+        box-shadow:
+            0 4px 20px -4px rgba(10, 22, 40, 0.5),
+            0 0 0 1px rgba(94, 179, 228, 0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .ann-remind-btn:hover {
+        transform: translateY(-2px);
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 90%, transparent);
+        box-shadow:
+            0 8px 28px -6px rgba(10, 22, 40, 0.55),
+            0 0 0 1px rgba(94, 179, 228, 0.22);
+    }
+
+    .ann-remind-btn__dot {
+        width: 0.45rem;
+        height: 0.45rem;
+        border-radius: 50%;
+        background: var(--color-integrax-red);
+        box-shadow: 0 0 6px var(--color-integrax-red);
+        flex-shrink: 0;
+        animation: ann-dot-pulse 2.2s ease-in-out infinite;
+    }
+
+    @media (max-width: 480px) {
+        .ann-remind-btn {
+            right: 0.75rem;
+            bottom: 0.75rem;
+        }
+    }
 }
 
 @keyframes ann-dot-pulse {
