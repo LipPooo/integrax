@@ -1519,27 +1519,26 @@ function initLeadership() {
         document.body.style.overflow = 'hidden';
         lenis?.stop();
 
+        const mobile = isMobile();
+
         if (prefersReducedMotion) {
-            gsap.set([backdrop, panel], { autoAlpha: 1 });
-            if (isMobile()) gsap.set(panel, { y: 0 });
-            else            gsap.set(panel, { x: 0 });
+            gsap.set(backdrop, { opacity: 1 });
+            gsap.set(panel, { x: 0, y: 0 });
             return;
         }
 
-        gsap.set(backdrop, { autoAlpha: 0 });
-        if (isMobile()) {
-            gsap.set(panel, { y: '100%', autoAlpha: 1 });
-        } else {
-            gsap.set(panel, { x: '100%', autoAlpha: 1 });
-        }
+        gsap.set(backdrop, { opacity: 0 });
+        gsap.set(panel, mobile ? { y: '100%' } : { x: '100%' });
 
-        openTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        openTl.to(backdrop, { autoAlpha: 1, duration: 0.4 });
-
-        if (isMobile()) {
-            openTl.to(panel, { y: 0, duration: 0.55, ease: 'cubic.out' }, '-=0.25');
+        openTl = gsap.timeline();
+        if (mobile) {
+            openTl
+                .to(backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' })
+                .to(panel, { y: 0, duration: 0.52, ease: 'power3.out' }, '-=0.2');
         } else {
-            openTl.to(panel, { x: 0, duration: 0.55, ease: 'cubic.out' }, '-=0.25');
+            openTl
+                .to(backdrop, { opacity: 1, duration: 0.35, ease: 'power2.out' })
+                .to(panel, { x: 0, duration: 0.52, ease: 'power3.out' }, '-=0.2');
         }
     }
 
@@ -1549,27 +1548,31 @@ function initLeadership() {
         openTl?.kill();
 
         if (prefersReducedMotion) {
-            gsap.set([backdrop, panel], { autoAlpha: 0 });
             modal.hidden = true;
+            gsap.set([backdrop, panel], { clearProps: 'all' });
             document.body.style.overflow = '';
             lenis?.start();
             return;
         }
 
+        const mobile = isMobile();
         closeTl = gsap.timeline({
-            onComplete: () => {
+            onComplete() {
                 modal.hidden = true;
+                gsap.set([backdrop, panel], { clearProps: 'all' });
                 document.body.style.overflow = '';
                 lenis?.start();
             },
         });
-
-        if (isMobile()) {
-            closeTl.to(panel, { y: '100%', duration: 0.42, ease: 'power3.in' });
+        if (mobile) {
+            closeTl
+                .to(panel, { y: '100%', duration: 0.42, ease: 'power3.in' })
+                .to(backdrop, { opacity: 0, duration: 0.3 }, '-=0.2');
         } else {
-            closeTl.to(panel, { x: '100%', duration: 0.42, ease: 'power3.in' });
+            closeTl
+                .to(panel, { x: '100%', duration: 0.42, ease: 'power3.in' })
+                .to(backdrop, { opacity: 0, duration: 0.3 }, '-=0.2');
         }
-        closeTl.to(backdrop, { autoAlpha: 0, duration: 0.3 }, '-=0.2');
     }
 
     // ── Wire open buttons ──────────────────────────────────────

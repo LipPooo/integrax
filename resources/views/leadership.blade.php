@@ -189,10 +189,55 @@ $executives = [
             </p>
         </div>
 
-        {{-- Executive cards grid --}}
+        {{-- ─── Featured: Managing Director ─── --}}
+        @php $md = $executives[0]; @endphp
+        <div class="ldg-card ldg-card--featured mb-8 lg:mb-9" data-exec-index="0">
+
+            {{-- Top accent --}}
+            <div class="ldg-card-accent ldg-card-accent--gold" aria-hidden="true"></div>
+
+            {{-- Left: avatar + identity --}}
+            <div class="ldg-feat-identity">
+                <div class="ldg-card-avatar-wrap ldg-feat-avatar-wrap">
+                    <div class="ldg-card-avatar ldg-avatar--md ldg-feat-avatar" aria-hidden="true">
+                        <span class="ldg-card-initials ldg-feat-initials">{{ $md['initials'] }}</span>
+                    </div>
+                    <div class="ldg-card-avatar-ring" aria-hidden="true"></div>
+                </div>
+                <div class="ldg-feat-name-block">
+                    <span class="ldg-card-badge ldg-feat-badge">{{ $md['department'] }}</span>
+                    <h3 class="ldg-card-name ldg-feat-name mt-3">{{ $md['name'] }}</h3>
+                    <p class="ldg-card-title ldg-feat-title mt-2">{{ $md['title'] }}</p>
+                    <div class="ldg-feat-sep" aria-hidden="true"></div>
+                    <p class="ldg-feat-company">Integrax Berhad · TNB Group</p>
+                </div>
+            </div>
+
+            {{-- Right: bio preview + CTA --}}
+            <div class="ldg-feat-content">
+                <p class="ldg-feat-preview">{{ $md['preview'] }}</p>
+                <div class="ldg-feat-footer mt-8">
+                    <button
+                        class="ldg-view-btn ldg-view-btn--feat js-ldg-open"
+                        data-exec-index="0"
+                        aria-label="View profile of {{ $md['name'] }}"
+                    >
+                        <span>View Full Profile</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 17 17 7M7 7h10v10"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="ldg-card-glow" aria-hidden="true"></div>
+        </div>
+
+        {{-- ─── Executive cards grid (remaining 5) ─── --}}
         <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-9">
             @foreach($executives as $index => $exec)
-            <div class="ldg-card reveal-up" data-exec-index="{{ $index }}">
+            @if($index === 0) @continue @endif
+            <div class="ldg-card" data-exec-index="{{ $index }}">
 
                 {{-- Top accent line --}}
                 <div class="ldg-card-accent" aria-hidden="true"></div>
@@ -210,10 +255,6 @@ $executives = [
                     <span class="ldg-card-badge">{{ $exec['department'] }}</span>
                     <h3 class="ldg-card-name mt-3">{{ $exec['name'] }}</h3>
                     <p class="ldg-card-title mt-2">{{ $exec['title'] }}</p>
-
-                    @if($exec['preview'])
-                    <p class="ldg-card-preview mt-5">{{ $exec['preview'] }}</p>
-                    @endif
 
                     <div class="ldg-card-footer mt-7">
                         <button
