@@ -52,17 +52,21 @@ function initNavbar() {
     const lightSectionSelectors = ['#stats', '#segments', '#journey', '#esg', '#network'];
     const headerProbeOffset = 72;
 
-    const isOverLightSection = () => lightSectionSelectors.some((selector) => {
-        const section = document.querySelector(selector);
+    const isOverLightSection = () => {
+        const byId = lightSectionSelectors.some((selector) => {
+            const section = document.querySelector(selector);
+            if (!section) return false;
+            const { top, bottom } = section.getBoundingClientRect();
+            return top <= headerProbeOffset && bottom > headerProbeOffset;
+        });
+        if (byId) return true;
 
-        if (!section) {
-            return false;
-        }
-
-        const { top, bottom } = section.getBoundingClientRect();
-
-        return top <= headerProbeOffset && bottom > headerProbeOffset;
-    });
+        const lightSections = document.querySelectorAll('.section-tone-light, .section-tone-white');
+        return Array.from(lightSections).some((section) => {
+            const { top, bottom } = section.getBoundingClientRect();
+            return top <= headerProbeOffset && bottom > headerProbeOffset;
+        });
+    };
 
     const getScrollY = () => (lenis ? lenis.scroll : window.scrollY);
 

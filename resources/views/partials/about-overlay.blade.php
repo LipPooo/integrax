@@ -40,7 +40,7 @@
     </button>
 
     {{-- Satellite node: About Integrax Berhad --}}
-    <a href="#" class="about-node" data-node="integrax" aria-label="About Integrax Berhad">
+    <a href="/about" class="about-node" data-node="integrax" aria-label="About Integrax Berhad">
         <span class="about-node-icon" aria-hidden="true">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M9 21V11h6v10"/>
