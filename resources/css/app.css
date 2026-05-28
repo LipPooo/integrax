@@ -870,7 +870,7 @@
         position: fixed;
         bottom: 1.5rem;
         right: 1.5rem;
-        z-index: 8999;
+        z-index: 9001;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;

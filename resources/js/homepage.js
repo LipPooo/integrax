@@ -1107,7 +1107,7 @@ function initAnnouncements() {
         const remindBtn = document.getElementById(`ann-remind-${annId}`);
         remindBtn?.addEventListener('click', () => {
             gsap.to(remindBtn, {
-                x: 80, autoAlpha: 0, duration: 0.3, ease: 'power2.in',
+                x: 80, opacity: 0, duration: 0.3, ease: 'power2.in',
                 onComplete: () => { remindBtn.hidden = true; },
             });
 
@@ -1146,10 +1146,8 @@ function showRemindButton(annId) {
     const btn = document.getElementById(`ann-remind-${annId}`);
     if (!btn) return;
     btn.hidden = false;
-    gsap.fromTo(btn,
-        { x: 80, autoAlpha: 0 },
-        { x: 0, autoAlpha: 1, duration: 0.55, ease: 'power3.out' },
-    );
+    gsap.set(btn, { x: 80, opacity: 0 });
+    gsap.to(btn, { x: 0, opacity: 1, duration: 0.55, ease: 'power3.out' });
 }
 
 function spawnAboutParticles() {
