@@ -187,7 +187,7 @@
                         'detail'  => 'Strategic alignment under TNB Genco',
                     ],
                     [
-                        'display' => 'RM<span class="stat-counter" data-value="650">0</span>M',
+                        'display' => '<span>RM</span><span class="stat-counter" data-value="650">0</span><span>M</span>',
                         'label'   => 'Managed Assets',
                         'detail'  => 'Strategic infrastructure asset portfolio',
                     ],
