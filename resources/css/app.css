@@ -2170,3 +2170,36 @@
     .about-hub-ring  { animation: none; }
     .about-bg-orb    { animation: none; }
 }
+
+/* ── Mobile performance hardening ────────────────────────────── */
+@media (max-width: 767px) {
+    /* Stop all decorative CSS animations on mobile */
+    .about-hub-ring--outer,
+    .about-hub-ring--mid {
+        animation: none;
+    }
+    .about-bg-orb {
+        animation: none;
+    }
+
+    /* Reduce ambient glow render cost on mobile */
+    .section-ambient-glow {
+        opacity: 0.45;
+        filter: blur(80px);
+    }
+
+    /* Drop GPU-layer hints that are wasteful on mobile */
+    .segment-card-inner,
+    .stats-section,
+    .network-map-glass,
+    .network-particle,
+    .reveal-section {
+        will-change: auto;
+    }
+
+    /* Simplify site-header on mobile — backdrop-blur-2xl is heavy */
+    .site-header.is-scrolled {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+}

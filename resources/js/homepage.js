@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobileDevice = window.innerWidth < 768;
 let lenis;
 
 function initSmoothScroll() {
@@ -13,10 +14,10 @@ function initSmoothScroll() {
     }
 
     lenis = new Lenis({
-        duration: 1.35,
+        duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - 2 ** (-10 * t)),
         smoothWheel: true,
-        touchMultiplier: 1.1,
+        touchMultiplier: 2,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
@@ -52,6 +53,7 @@ function initNavbar() {
     const lightSectionSelectors = ['#stats', '#segments', '#journey', '#esg', '#network'];
     const headerProbeOffset = 72;
 
+    let cachedLightSections = null;
     const isOverLightSection = () => {
         const byId = lightSectionSelectors.some((selector) => {
             const section = document.querySelector(selector);
@@ -61,8 +63,10 @@ function initNavbar() {
         });
         if (byId) return true;
 
-        const lightSections = document.querySelectorAll('.section-tone-light, .section-tone-white');
-        return Array.from(lightSections).some((section) => {
+        if (!cachedLightSections) {
+            cachedLightSections = Array.from(document.querySelectorAll('.section-tone-light, .section-tone-white'));
+        }
+        return cachedLightSections.some((section) => {
             const { top, bottom } = section.getBoundingClientRect();
             return top <= headerProbeOffset && bottom > headerProbeOffset;
         });
@@ -105,7 +109,7 @@ function initHero() {
     const media = document.querySelector('.hero-media');
     const content = document.querySelector('.hero-content');
 
-    if (!prefersReducedMotion && media) {
+    if (!prefersReducedMotion && media && !isMobileDevice) {
         gsap.to(media, {
             yPercent: 18,
             ease: 'none',
@@ -196,7 +200,8 @@ function initParticles() {
         return;
     }
 
-    const count = window.innerWidth < 768 ? 10 : 20;
+    const count = isMobileDevice ? 0 : 14;
+    if (!count) return;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -319,14 +324,16 @@ function initReveals() {
         },
     });
 
-    gsap.to('.esg-dot', {
-        boxShadow: '0 0 14px rgba(94, 179, 228, 0.85)',
-        repeat: -1,
-        yoyo: true,
-        duration: 2,
-        stagger: 0.35,
-        ease: 'sine.inOut',
-    });
+    if (!isMobileDevice) {
+        gsap.to('.esg-dot', {
+            boxShadow: '0 0 14px rgba(94, 179, 228, 0.85)',
+            repeat: -1,
+            yoyo: true,
+            duration: 2,
+            stagger: 0.35,
+            ease: 'sine.inOut',
+        });
+    }
 
     gsap.from('.network-reveal', {
         autoAlpha: 0,
@@ -367,18 +374,20 @@ function initReveals() {
         },
     });
 
-    gsap.utils.toArray('.section-glow').forEach((glow) => {
-        gsap.to(glow, {
-            y: -40,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: glow.parentElement,
-                start: 'top bottom',
-                end: 'bottom top',
-                scrub: true,
-            },
+    if (!isMobileDevice) {
+        gsap.utils.toArray('.section-glow').forEach((glow) => {
+            gsap.to(glow, {
+                y: -40,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: glow.parentElement,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
         });
-    });
+    }
 }
 
 function initCounters() {
@@ -451,14 +460,16 @@ function initRegionalNetwork() {
             },
         });
 
-        gsap.to(line, {
-            opacity: 0.55,
-            duration: 2.2,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1,
-            delay: 2.2 + Number(line.dataset.delay ?? 0),
-        });
+        if (!isMobileDevice) {
+            gsap.to(line, {
+                opacity: 0.55,
+                duration: 2.2,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: 2.2 + Number(line.dataset.delay ?? 0),
+            });
+        }
     });
 
     if (hub) {
@@ -487,24 +498,26 @@ function initRegionalNetwork() {
         scrollTrigger: { trigger: '#network-map-glass', start: 'top 86%', once: true },
     });
 
-    section.querySelectorAll('.map-node-group, .map-hub-group').forEach((group, i) => {
-        gsap.to(group, {
-            y: gsap.utils.random(-3, 3),
-            duration: 2.5 + i * 0.2,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1,
+    if (!isMobileDevice) {
+        section.querySelectorAll('.map-node-group, .map-hub-group').forEach((group, i) => {
+            gsap.to(group, {
+                y: gsap.utils.random(-3, 3),
+                duration: 2.5 + i * 0.2,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+            });
         });
-    });
 
-    if (map) {
-        gsap.to(map, {
-            y: -6,
-            duration: 3.5,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1,
-        });
+        if (map) {
+            gsap.to(map, {
+                y: -6,
+                duration: 3.5,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+            });
+        }
     }
 
     initNetworkParticles();
@@ -514,11 +527,11 @@ function initRegionalNetwork() {
 function initNetworkParticles() {
     const container = document.getElementById('network-particles');
 
-    if (!container || prefersReducedMotion) {
+    if (!container || prefersReducedMotion || isMobileDevice) {
         return;
     }
 
-    const count = window.innerWidth < 768 ? 6 : 12;
+    const count = 8;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -593,21 +606,22 @@ function initNetworkCards() {
             });
         });
 
+        let netCardRaf = null;
         card.addEventListener('mousemove', (e) => {
-            if (prefersReducedMotion) {
-                return;
-            }
-
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-            gsap.to(card, {
-                rotateY: x * 8,
-                rotateX: -y * 6,
-                duration: 0.35,
-                ease: 'power2.out',
-                transformPerspective: 900,
+            if (prefersReducedMotion || netCardRaf) return;
+            netCardRaf = requestAnimationFrame(() => {
+                netCardRaf = null;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                gsap.to(card, {
+                    rotateY: x * 8,
+                    rotateX: -y * 6,
+                    duration: 0.35,
+                    ease: 'power2.out',
+                    transformPerspective: 900,
+                    overwrite: 'auto',
+                });
             });
         });
     });
@@ -622,29 +636,32 @@ function initSegmentCards() {
             return;
         }
 
+        let segCardRaf = null;
         const handleMove = (e) => {
-            if (prefersReducedMotion) {
-                return;
-            }
+            if (prefersReducedMotion || segCardRaf) return;
+            segCardRaf = requestAnimationFrame(() => {
+                segCardRaf = null;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-            const rect = card.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
+                gsap.to(inner, {
+                    rotateY: x * 10,
+                    rotateX: -y * 8,
+                    duration: 0.5,
+                    ease: 'power2.out',
+                    transformPerspective: 1200,
+                    overwrite: 'auto',
+                });
 
-            gsap.to(inner, {
-                rotateY: x * 10,
-                rotateX: -y * 8,
-                duration: 0.5,
-                ease: 'power2.out',
-                transformPerspective: 1200,
-            });
-
-            gsap.to(image, {
-                scale: 1.1,
-                x: x * -12,
-                y: y * -12,
-                duration: 0.6,
-                ease: 'power2.out',
+                gsap.to(image, {
+                    scale: 1.1,
+                    x: x * -12,
+                    y: y * -12,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
             });
         };
 
@@ -1008,7 +1025,7 @@ function initJourneyTimeline() {
 }
 
 function initFloating() {
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || isMobileDevice) {
         return;
     }
 
@@ -1031,7 +1048,7 @@ function initAnnouncements() {
     const toasts = Array.from(hub.querySelectorAll('.announcement-toast'));
     if (!toasts.length) return;
 
-    gsap.set(toasts, { x: 400, autoAlpha: 0, filter: 'blur(12px)' });
+    gsap.set(toasts, { x: 400, autoAlpha: 0 });
 
     toasts.forEach((toast) => {
         const slideDelay  = Number(toast.dataset.delay)    || 3;
@@ -1050,15 +1067,15 @@ function initAnnouncements() {
         const enterTl = gsap.timeline({ delay: slideDelay });
         if (!prefersReducedMotion) {
             enterTl
-                .to(toast, { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.8, ease: 'power3.out' })
+                .to(toast, { x: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' })
                 .from(toast.querySelector('.announcement-toast__card'), { scale: 0.94, duration: 0.65, ease: 'back.out(1.5)' }, '<');
         } else {
-            enterTl.to(toast, { autoAlpha: 1, duration: 0.4, x: 0, filter: 'blur(0px)' });
+            enterTl.to(toast, { autoAlpha: 1, duration: 0.4, x: 0 });
         }
 
         // — Idle float (starts after entrance) —
         enterTl.eventCallback('onComplete', () => {
-            if (!prefersReducedMotion) {
+            if (!prefersReducedMotion && !isMobileDevice) {
                 state.floatTween = gsap.to(toast, { y: -7, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
             }
         });
@@ -1094,7 +1111,7 @@ function initAnnouncements() {
             state.floatTween?.kill();
             state.progressTl?.kill();
             gsap.to(toast, {
-                x: 400, autoAlpha: 0, filter: 'blur(10px)', duration: 0.35, ease: 'power3.in',
+                x: 400, autoAlpha: 0, duration: 0.35, ease: 'power3.in',
                 onComplete: () => {
                     toast.remove();
                     if (!hub.querySelector('.announcement-toast')) hub.remove();
@@ -1111,17 +1128,17 @@ function initAnnouncements() {
                 onComplete: () => { remindBtn.hidden = true; },
             });
 
-            gsap.set(toast, { x: 400, y: 0, scale: 1, autoAlpha: 0, filter: 'blur(12px)', pointerEvents: 'auto' });
+            gsap.set(toast, { x: 400, y: 0, scale: 1, autoAlpha: 0, pointerEvents: 'auto' });
             const reEnterTl = gsap.timeline();
             if (!prefersReducedMotion) {
                 reEnterTl
-                    .to(toast, { x: 0, autoAlpha: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' })
+                    .to(toast, { x: 0, autoAlpha: 1, duration: 0.65, ease: 'power3.out' })
                     .from(toast.querySelector('.announcement-toast__card'), { scale: 0.94, duration: 0.5, ease: 'back.out(1.5)' }, '<');
             } else {
-                reEnterTl.to(toast, { autoAlpha: 1, duration: 0.3, x: 0, filter: 'blur(0px)' });
+                reEnterTl.to(toast, { autoAlpha: 1, duration: 0.3, x: 0 });
             }
             reEnterTl.eventCallback('onComplete', () => {
-                if (!prefersReducedMotion) {
+                if (!prefersReducedMotion && !isMobileDevice) {
                     state.floatTween = gsap.to(toast, { y: -7, duration: 3, ease: 'sine.inOut', yoyo: true, repeat: -1 });
                 }
             });
@@ -1134,7 +1151,7 @@ function hideToast(toast, annId, state) {
     state.floatTween = null;
 
     gsap.to(toast, {
-        x: 400, autoAlpha: 0, filter: 'blur(10px)', duration: 0.45, ease: 'power3.in',
+        x: 400, autoAlpha: 0, duration: 0.45, ease: 'power3.in',
         onComplete: () => {
             gsap.set(toast, { pointerEvents: 'none' });
             showRemindButton(annId);
@@ -1152,9 +1169,9 @@ function showRemindButton(annId) {
 
 function spawnAboutParticles() {
     const container = document.getElementById('about-particles');
-    if (!container || prefersReducedMotion) return;
+    if (!container || prefersReducedMotion || isMobileDevice) return;
 
-    const count = window.innerWidth < 768 ? 16 : 30;
+    const count = 20;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -1267,8 +1284,8 @@ function initAboutOverlay() {
                 // on GSAP snapshotting possibly-stale current values.
                 tl.fromTo(
                     hub,
-                    { scale: 0, filter: 'blur(28px)' },
-                    { scale: 1, filter: 'blur(0px)', duration: 0.68, ease: 'back.out(1.7)' },
+                    { scale: 0, autoAlpha: 0 },
+                    { scale: 1, autoAlpha: 1, duration: 0.68, ease: 'back.out(1.7)' },
                     '-=0.2',
                 );
 
@@ -1297,8 +1314,8 @@ function initAboutOverlay() {
 
                     tl.fromTo(
                         node,
-                        { x: fx, y: fy, autoAlpha: 0, scale: 0.82, filter: 'blur(8px)' },
-                        { x: 0,  y: 0,  autoAlpha: 1, scale: 1,    filter: 'blur(0px)', duration: 0.52, ease: 'power3.out' },
+                        { x: fx, y: fy, autoAlpha: 0, scale: 0.85 },
+                        { x: 0,  y: 0,  autoAlpha: 1, scale: 1,    duration: 0.52, ease: 'power3.out' },
                         (isMobile ? 0.28 : 0.32) + i * 0.07,
                     );
                 });
@@ -1312,7 +1329,7 @@ function initAboutOverlay() {
                     );
                 }
             } else {
-                gsap.set([hub, ...nodes, hintEl].filter(Boolean), { autoAlpha: 1, filter: 'blur(0px)' });
+                gsap.set([hub, ...nodes, hintEl].filter(Boolean), { autoAlpha: 1 });
                 if (lineEls.length) gsap.set(lineEls, { strokeDashoffset: 0, opacity: 0.42 });
             }
 
@@ -1342,7 +1359,7 @@ function initAboutOverlay() {
         closeTl
             .to(allContent, { autoAlpha: 0, scale: 0.9, duration: 0.24, ease: 'power2.in', stagger: 0.025 })
             .to(lineEls,    { strokeDashoffset: (i, el) => -el.getTotalLength(), opacity: 0, duration: 0.24, ease: 'power2.in' }, '<')
-            .to(hub,  { scale: 0, filter: 'blur(22px)', autoAlpha: 0, duration: 0.32, ease: 'power2.in' }, '-=0.1');
+            .to(hub,  { scale: 0, autoAlpha: 0, duration: 0.32, ease: 'power2.in' }, '-=0.1');
 
         if (!prefersReducedMotion && overlayBg) {
             closeTl.to(overlayBg, { backgroundColor: '#06101c', duration: 0.28, ease: 'power2.in' }, '-=0.2');
@@ -1592,19 +1609,24 @@ function initLeadership() {
     });
 
     // ── Hover magnetic effect on cards ────────────────────────
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && !isMobileDevice) {
         grid.querySelectorAll('.ldg-card').forEach((card) => {
+            let ldgCardRaf = null;
             card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width  - 0.5;
-                const y = (e.clientY - rect.top)  / rect.height - 0.5;
-                gsap.to(card, {
-                    rotateY: x * 5,
-                    rotateX: -y * 4,
-                    duration: 0.4,
-                    ease: 'power2.out',
-                    transformPerspective: 900,
-                    overwrite: 'auto',
+                if (ldgCardRaf) return;
+                ldgCardRaf = requestAnimationFrame(() => {
+                    ldgCardRaf = null;
+                    const rect = card.getBoundingClientRect();
+                    const x = (e.clientX - rect.left) / rect.width  - 0.5;
+                    const y = (e.clientY - rect.top)  / rect.height - 0.5;
+                    gsap.to(card, {
+                        rotateY: x * 5,
+                        rotateX: -y * 4,
+                        duration: 0.4,
+                        ease: 'power2.out',
+                        transformPerspective: 900,
+                        overwrite: 'auto',
+                    });
                 });
             });
 
