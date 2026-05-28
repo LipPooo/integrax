@@ -130,7 +130,7 @@
 
                 id="network-map-glass"
 
-                class="network-map-glass relative mx-auto max-w-xl overflow-hidden rounded-3xl p-6 backdrop-blur-2xl md:max-w-2xl md:p-8 lg:p-10"
+                class="network-map-glass relative mx-auto max-w-xl overflow-hidden rounded-3xl p-6 backdrop-blur-md md:max-w-2xl md:p-8 lg:p-10"
 
             >
 

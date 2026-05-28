@@ -156,7 +156,7 @@
                     aria-labelledby="journey-tab-{{ $milestone['year'] }}"
                     @if ($milestone['year'] !== $journeyDefaultYear) hidden @endif
                 >
-                    <div class="journey-panel-card overflow-hidden rounded-[1.75rem] border border-integrax-blue/10 bg-white/80 shadow-[0_24px_48px_-20px_rgba(10,22,40,0.14)] backdrop-blur-xl">
+                    <div class="journey-panel-card overflow-hidden rounded-[1.75rem] border border-integrax-blue/10 bg-white/80 shadow-[0_24px_48px_-20px_rgba(10,22,40,0.14)] backdrop-blur-md">
                         <div class="grid lg:grid-cols-12">
                             <div class="relative hidden overflow-hidden lg:col-span-5 lg:block">
                                 <img

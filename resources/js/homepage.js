@@ -121,7 +121,7 @@ function initHero() {
             },
         });
 
-        gsap.to('.hero-gradient-orb', {
+        const heroOrbTween = gsap.to('.hero-gradient-orb', {
             x: 30,
             y: -20,
             duration: 6,
@@ -131,12 +131,20 @@ function initHero() {
             stagger: { each: 1.2, from: 'random' },
         });
 
-        gsap.to('.hero-gradient-sweep', {
+        const heroSweepTween = gsap.to('.hero-gradient-sweep', {
             opacity: 0.7,
             duration: 4,
             ease: 'sine.inOut',
             yoyo: true,
             repeat: -1,
+        });
+
+        ScrollTrigger.create({
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom top',
+            onLeave: () => { heroOrbTween.pause(); heroSweepTween.pause(); },
+            onEnterBack: () => { heroOrbTween.resume(); heroSweepTween.resume(); },
         });
     }
 
@@ -169,12 +177,20 @@ function initHero() {
         .from('.hero-cta > *', { autoAlpha: 0, y: 20, duration: 0.7, stagger: 0.12 }, '-=0.5')
         .from('.scroll-indicator', { autoAlpha: 0, duration: 0.6 }, '-=0.3');
 
-    gsap.to('.scroll-dot', {
+    const scrollDotTween = gsap.to('.scroll-dot', {
         y: 14,
         duration: 1.4,
         ease: 'power2.inOut',
         yoyo: true,
         repeat: -1,
+    });
+
+    ScrollTrigger.create({
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        onLeave: () => scrollDotTween.pause(),
+        onEnterBack: () => scrollDotTween.resume(),
     });
 }
 
@@ -200,7 +216,7 @@ function initParticles() {
         return;
     }
 
-    const count = isMobileDevice ? 0 : 14;
+    const count = isMobileDevice ? 0 : 8;
     if (!count) return;
 
     for (let i = 0; i < count; i++) {
@@ -325,7 +341,7 @@ function initReveals() {
     });
 
     if (!isMobileDevice) {
-        gsap.to('.esg-dot', {
+        const esgDotTween = gsap.to('.esg-dot', {
             boxShadow: '0 0 14px rgba(94, 179, 228, 0.85)',
             repeat: -1,
             yoyo: true,
@@ -333,6 +349,18 @@ function initReveals() {
             stagger: 0.35,
             ease: 'sine.inOut',
         });
+        const esgEl = document.getElementById('esg');
+        if (esgEl) {
+            ScrollTrigger.create({
+                trigger: esgEl,
+                start: 'top bottom',
+                end: 'bottom top',
+                onLeave: () => esgDotTween.pause(),
+                onLeaveBack: () => esgDotTween.pause(),
+                onEnter: () => esgDotTween.resume(),
+                onEnterBack: () => esgDotTween.resume(),
+            });
+        }
     }
 
     gsap.from('.network-reveal', {
@@ -438,6 +466,8 @@ function initRegionalNetwork() {
         return;
     }
 
+    const networkInfiniteTweens = [];
+
     lines.forEach((line) => {
         const length = line.getTotalLength?.() ?? 200;
 
@@ -461,14 +491,14 @@ function initRegionalNetwork() {
         });
 
         if (!isMobileDevice) {
-            gsap.to(line, {
+            networkInfiniteTweens.push(gsap.to(line, {
                 opacity: 0.55,
                 duration: 2.2,
                 ease: 'sine.inOut',
                 yoyo: true,
                 repeat: -1,
                 delay: 2.2 + Number(line.dataset.delay ?? 0),
-            });
+            }));
         }
     });
 
@@ -500,38 +530,50 @@ function initRegionalNetwork() {
 
     if (!isMobileDevice) {
         section.querySelectorAll('.map-node-group, .map-hub-group').forEach((group, i) => {
-            gsap.to(group, {
+            networkInfiniteTweens.push(gsap.to(group, {
                 y: gsap.utils.random(-3, 3),
                 duration: 2.5 + i * 0.2,
                 ease: 'sine.inOut',
                 yoyo: true,
                 repeat: -1,
-            });
+            }));
         });
 
         if (map) {
-            gsap.to(map, {
+            networkInfiniteTweens.push(gsap.to(map, {
                 y: -6,
                 duration: 3.5,
                 ease: 'sine.inOut',
                 yoyo: true,
                 repeat: -1,
-            });
+            }));
         }
     }
 
-    initNetworkParticles();
+    initNetworkParticles(networkInfiniteTweens);
     initNetworkCards();
+
+    if (networkInfiniteTweens.length) {
+        ScrollTrigger.create({
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            onLeave: () => networkInfiniteTweens.forEach((t) => t.pause()),
+            onLeaveBack: () => networkInfiniteTweens.forEach((t) => t.pause()),
+            onEnter: () => networkInfiniteTweens.forEach((t) => t.resume()),
+            onEnterBack: () => networkInfiniteTweens.forEach((t) => t.resume()),
+        });
+    }
 }
 
-function initNetworkParticles() {
+function initNetworkParticles(tweenCollection = []) {
     const container = document.getElementById('network-particles');
 
     if (!container || prefersReducedMotion || isMobileDevice) {
         return;
     }
 
-    const count = 8;
+    const count = 4;
 
     for (let i = 0; i < count; i++) {
         const dot = document.createElement('span');
@@ -545,7 +587,7 @@ function initNetworkParticles() {
         `;
         container.appendChild(dot);
 
-        gsap.to(dot, {
+        tweenCollection.push(gsap.to(dot, {
             y: gsap.utils.random(-40, -120),
             x: gsap.utils.random(-20, 20),
             duration: gsap.utils.random(10, 18),
@@ -553,7 +595,7 @@ function initNetworkParticles() {
             yoyo: true,
             ease: 'sine.inOut',
             delay: gsap.utils.random(0, 5),
-        });
+        }));
     }
 }
 
@@ -1031,7 +1073,7 @@ function initFloating() {
 
     gsap.utils.toArray('.float-subtle').forEach((el, i) => {
         gsap.to(el, {
-            y: gsap.utils.random(-12, 12),
+            y: gsap.utils.random(-8, 8),
             duration: gsap.utils.random(3, 5),
             ease: 'sine.inOut',
             yoyo: true,

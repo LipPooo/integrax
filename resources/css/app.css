@@ -340,10 +340,6 @@
     .map-node-group:nth-child(5) .map-pulse { animation-delay: 0.6s; }
     .map-node-group:nth-child(6) .map-pulse { animation-delay: 1s; }
 
-    .reveal-section {
-        @apply will-change-transform;
-    }
-
     .section-tone-dark {
         background-color: var(--color-integrax-blue);
         background-image:
@@ -431,7 +427,7 @@
     }
 
     .section-ambient-glow {
-        @apply pointer-events-none absolute rounded-full blur-[120px];
+        @apply pointer-events-none absolute rounded-full blur-[80px];
     }
 
     .section-ambient-glow--light {
@@ -446,12 +442,8 @@
         background: color-mix(in oklab, var(--color-integrax-red) 10%, transparent);
     }
 
-    .stats-section {
-        @apply will-change-transform;
-    }
-
     .stats-section .stat-item {
-        @apply will-change-transform border-integrax-blue/10 bg-white/75 shadow-[0_8px_32px_-12px_rgba(10,22,40,0.12)] backdrop-blur-md;
+        @apply border-integrax-blue/10 bg-white/75 shadow-[0_8px_32px_-12px_rgba(10,22,40,0.12)] backdrop-blur-sm;
     }
 
     .stats-section .stat-item:hover {
@@ -476,7 +468,7 @@
     }
 
     .network-section .network-card {
-        @apply border-integrax-blue/10 bg-white/70 shadow-[0_8px_32px_-14px_rgba(10,22,40,0.14)] backdrop-blur-xl;
+        @apply border-integrax-blue/10 bg-white/70 shadow-[0_8px_32px_-14px_rgba(10,22,40,0.14)] backdrop-blur;
     }
 
     .network-section .network-card:hover {
@@ -728,7 +720,7 @@
     .announcement-toast {
         pointer-events: auto;
         position: relative;
-        will-change: transform, opacity, filter;
+        will-change: transform, opacity;
     }
 
     .announcement-toast__glow {
