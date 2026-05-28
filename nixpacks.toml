@@ -10,7 +10,6 @@ nixPkgs = [
     "php82Extensions.tokenizer",
     "php82Extensions.xml",
     "php82Extensions.zip",
-    "composer",
     "nodejs_20"
 ]
 
