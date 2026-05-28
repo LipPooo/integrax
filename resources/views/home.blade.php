@@ -182,14 +182,30 @@
 
             <div id="stats-grid" class="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                 @foreach ([
-                    ['value' => 35, 'suffix' => '+', 'label' => 'Years Experience', 'detail' => 'Proven leadership since establishment'],
-                    ['value' => 200, 'suffix' => '+', 'label' => 'Projects Delivered', 'detail' => 'Across marine, infra & energy'],
-                    ['value' => 50, 'suffix' => '+', 'label' => 'Strategic Partnerships', 'detail' => 'Global & regional alliances'],
-                    ['value' => 99, 'suffix' => '%', 'label' => 'Operational Excellence', 'detail' => 'Safety & reliability benchmarks'],
+                    [
+                        'display' => '2015',
+                        'label'   => 'Subsidiary of TNB',
+                        'detail'  => 'Strategic alignment under TNB Genco',
+                    ],
+                    [
+                        'display' => 'RM<span class="stat-counter" data-value="650">0</span>M',
+                        'label'   => 'Managed Assets',
+                        'detail'  => 'Strategic infrastructure asset portfolio',
+                    ],
+                    [
+                        'display' => '<span class="stat-counter" data-value="165">0</span>K DWT',
+                        'label'   => 'Port Handling Capacity',
+                        'detail'  => 'Dedicated energy logistics infrastructure',
+                    ],
+                    [
+                        'display' => '<span class="stat-counter" data-value="3">0</span> Lines',
+                        'label'   => 'Coal Transfer System',
+                        'detail'  => '3,800 MT/hour operational capability',
+                    ],
                 ] as $stat)
                     <div class="stat-item group rounded-2xl p-10 text-center transition-colors duration-500">
                         <p class="text-5xl font-extrabold tracking-tight text-integrax-blue md:text-6xl">
-                            <span class="stat-counter" data-value="{{ $stat['value'] }}">0</span><span class="text-integrax-blue-glow">{{ $stat['suffix'] }}</span>
+                            {!! $stat['display'] !!}
                         </p>
                         <p class="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-integrax-blue-light">{{ $stat['label'] }}</p>
                         <p class="stat-detail mt-3 text-sm leading-relaxed text-integrax-blue/55">{{ $stat['detail'] }}</p>
