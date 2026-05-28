@@ -7,7 +7,7 @@
 {{-- ═══════════════════════ NAVBAR ═══════════════════════ --}}
 <header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
     <div class="site-header-glow pointer-events-none absolute inset-x-0 top-0 h-full" aria-hidden="true"></div>
-    <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-8 py-6 lg:px-14 lg:py-7">
+    <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-4 py-5 sm:px-6 sm:py-6 lg:px-14 lg:py-7">
         <a href="/" class="site-header-logo group flex items-center gap-5">
             <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-105" />
         </a>
@@ -42,7 +42,7 @@
         </button>
     </div>
 
-    <div id="mobile-menu" class="site-header-mobile hidden border-t px-8 py-8 backdrop-blur-2xl lg:hidden">
+    <div id="mobile-menu" class="site-header-mobile hidden border-t px-5 py-6 sm:px-8 sm:py-8 backdrop-blur-2xl lg:hidden">
         <nav class="flex flex-col gap-5">
             <button type="button" class="about-trigger js-about-trigger mobile-nav-link w-full text-left">About</button>
             <a href="/#stats" class="mobile-nav-link">Performance</a>
@@ -67,7 +67,7 @@
     </div>
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <div class="relative z-10 mx-auto w-full max-w-[90rem] px-8 pb-36 pt-44 lg:px-14 lg:pb-44 lg:pt-52">
+    <div class="relative z-10 mx-auto w-full max-w-[90rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-36 lg:px-14 lg:pb-44 lg:pt-52">
 
         <div class="about-hero-item" style="animation-delay:0.15s">
             <p class="mb-8 flex flex-wrap items-center gap-4">
@@ -77,7 +77,7 @@
         </div>
 
         <div class="about-hero-item max-w-5xl" style="animation-delay:0.3s">
-            <h1 class="text-4xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+            <h1 class="text-3xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]">
                 Decades of Reliable<br>
                 <span class="bg-linear-to-r from-white via-integrax-blue-light to-white/85 bg-clip-text text-transparent">Infrastructure</span><br>
                 Service.
@@ -130,8 +130,8 @@
     <div class="section-ambient-glow section-ambient-glow--red absolute right-1/4 top-1/3 h-60 w-60 opacity-50"></div>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-integrax-blue-light/35 to-transparent" aria-hidden="true"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-        <div class="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+        <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-24">
 
             {{-- Left: narrative --}}
             <div class="reveal-up">
@@ -162,7 +162,7 @@
                 <div class="relative">
                     <div class="pointer-events-none absolute -inset-8 rounded-3xl bg-linear-to-br from-integrax-blue-light/8 via-transparent to-integrax-blue-pale-deep/30" aria-hidden="true"></div>
 
-                    <div class="relative overflow-hidden rounded-3xl border border-integrax-blue-light/20 bg-white/70 p-10 shadow-[0_24px_64px_-12px_rgba(10,22,40,0.12)] backdrop-blur-sm lg:p-12">
+                    <div class="relative overflow-hidden rounded-3xl border border-integrax-blue-light/20 bg-white/70 p-6 shadow-[0_24px_64px_-12px_rgba(10,22,40,0.12)] backdrop-blur-sm sm:p-10 lg:p-12">
                         <div class="mb-8 flex items-center gap-4">
                             <div class="about-heritage-marker flex h-12 w-12 items-center justify-center rounded-2xl">
                                 <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
@@ -204,7 +204,7 @@
     <div class="section-ambient-glow section-ambient-glow--light absolute -right-40 top-20 h-96 w-96 opacity-55"></div>
     <div class="section-ambient-glow section-ambient-glow--light absolute -left-24 bottom-10 h-72 w-72 opacity-45"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
         <div class="reveal-up mx-auto max-w-3xl text-center">
             <p class="section-eyebrow">Port Infrastructure</p>
             <h2 class="section-title">Dedicated Facilities at Stesen Janakuasa Sultan Azlan Shah</h2>
@@ -214,7 +214,7 @@
         </div>
 
         {{-- Stats grid --}}
-        <div class="mt-20 grid gap-8 sm:grid-cols-3 lg:gap-6">
+        <div class="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-3 sm:gap-8 lg:mt-20 lg:gap-6">
             @foreach ([
                 [
                     'display' => 'RM<span class="stat-counter" data-value="300">0</span>M',
@@ -235,7 +235,7 @@
                     'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819"/>',
                 ],
             ] as $stat)
-                <div class="reveal-up group rounded-3xl border border-integrax-blue-light/15 bg-white p-10 text-center shadow-[0_4px_32px_-8px_rgba(10,22,40,0.08)] transition-shadow duration-500 hover:shadow-[0_8px_48px_-12px_rgba(10,22,40,0.14)]">
+                <div class="reveal-up group rounded-3xl border border-integrax-blue-light/15 bg-white p-6 text-center shadow-[0_4px_32px_-8px_rgba(10,22,40,0.08)] transition-shadow duration-500 hover:shadow-[0_8px_48px_-12px_rgba(10,22,40,0.14)] sm:p-10">
                     <div class="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-integrax-blue-pale">
                         <svg class="h-7 w-7 text-integrax-blue-glow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">{!! $stat['icon'] !!}</svg>
                     </div>
@@ -247,8 +247,8 @@
         </div>
 
         {{-- Subsidiary breakdown --}}
-        <div class="mt-20 grid gap-8 lg:grid-cols-2 lg:gap-10">
-            <div class="reveal-up rounded-3xl border border-integrax-blue-light/15 bg-integrax-blue-pale/60 p-10">
+        <div class="mt-12 grid gap-6 sm:mt-16 sm:gap-8 lg:mt-20 lg:grid-cols-2 lg:gap-10">
+            <div class="reveal-up rounded-3xl border border-integrax-blue-light/15 bg-integrax-blue-pale/60 p-6 sm:p-10">
                 <div class="mb-6 flex items-start gap-5">
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-integrax-blue-glow/20 bg-integrax-blue-glow/10">
                         <svg class="h-6 w-6 text-integrax-blue-glow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
@@ -266,7 +266,7 @@
                 </p>
             </div>
 
-            <div class="reveal-up rounded-3xl border border-integrax-blue-light/15 bg-integrax-blue-pale/60 p-10">
+            <div class="reveal-up rounded-3xl border border-integrax-blue-light/15 bg-integrax-blue-pale/60 p-6 sm:p-10">
                 <div class="mb-6 flex items-start gap-5">
                     <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-integrax-blue-glow/20 bg-integrax-blue-glow/10">
                         <svg class="h-6 w-6 text-integrax-blue-glow" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
@@ -295,10 +295,10 @@
     <div class="section-ambient-glow section-ambient-glow--dark absolute right-0 bottom-0 h-96 w-96 opacity-70"></div>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-integrax-blue-light/30 to-transparent" aria-hidden="true"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
         <div class="reveal-up max-w-3xl">
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-red">Technical Excellence</p>
-            <h2 class="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-[3.25rem]">
+            <h2 class="mt-5 text-3xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
                 Precision-Engineered<br>Coal Handling Systems
             </h2>
             <p class="mt-8 text-lg leading-relaxed text-white/65">
@@ -306,10 +306,10 @@
             </p>
         </div>
 
-        <div class="mt-20 grid gap-8 lg:grid-cols-3 lg:gap-6">
+        <div class="mt-12 grid gap-6 sm:mt-16 sm:gap-8 lg:mt-20 lg:grid-cols-3 lg:gap-6">
 
             {{-- Ship Unloaders --}}
-            <div class="reveal-up about-glass-card rounded-3xl p-10">
+            <div class="reveal-up about-glass-card rounded-3xl p-6 sm:p-10">
                 <div class="mb-8 flex items-center gap-4">
                     <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-integrax-blue-light/30 bg-integrax-blue-light/10">
                         <svg class="h-7 w-7 text-integrax-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -330,7 +330,7 @@
             </div>
 
             {{-- Conveyor System --}}
-            <div class="reveal-up about-glass-card rounded-3xl p-10">
+            <div class="reveal-up about-glass-card rounded-3xl p-6 sm:p-10">
                 <div class="mb-8 flex items-center gap-4">
                     <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-integrax-blue-light/30 bg-integrax-blue-light/10">
                         <svg class="h-7 w-7 text-integrax-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -351,7 +351,7 @@
             </div>
 
             {{-- Berths --}}
-            <div class="reveal-up about-glass-card rounded-3xl p-10">
+            <div class="reveal-up about-glass-card rounded-3xl p-6 sm:p-10">
                 <div class="mb-8 flex items-center gap-4">
                     <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-integrax-blue-light/30 bg-integrax-blue-light/10">
                         <svg class="h-7 w-7 text-integrax-blue-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -384,8 +384,8 @@
     <div class="float-subtle pointer-events-none absolute left-1/3 top-1/4 h-2 w-2 rounded-full bg-integrax-blue-light/50 blur-[1px]"></div>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-integrax-blue-light/30 to-transparent" aria-hidden="true"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-        <div class="grid items-start gap-16 lg:grid-cols-2 lg:gap-24">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+        <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-24">
 
             {{-- Left: narrative --}}
             <div class="reveal-up">
@@ -402,7 +402,7 @@
                         Our Business Segments
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>
-                    <a href="/#contact" class="relative inline-flex items-center gap-2.5 rounded-full border border-integrax-blue/20 bg-integrax-blue/5 px-9 py-4 text-sm font-semibold text-integrax-blue transition hover:bg-integrax-blue/10">
+                    <a href="/#contact" class="relative inline-flex items-center gap-2.5 rounded-full border border-integrax-blue/20 bg-integrax-blue/5 px-6 py-3.5 text-sm font-semibold text-integrax-blue transition hover:bg-integrax-blue/10 sm:px-9 sm:py-4">
                         Contact Us
                     </a>
                 </div>
@@ -452,8 +452,8 @@
     <div class="section-ambient-glow section-ambient-glow--red absolute -right-20 bottom-0 h-72 w-72 opacity-40"></div>
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(94,179,228,0.08),transparent_60%)]"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-        <div class="grid gap-16 lg:grid-cols-12">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+        <div class="grid gap-10 lg:gap-16 lg:grid-cols-12">
             <div class="lg:col-span-5">
                 <a href="/" class="flex items-center gap-5">
                     <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain" />

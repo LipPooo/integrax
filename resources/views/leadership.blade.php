@@ -72,7 +72,7 @@ $executives = [
 {{-- ═══════════════════════ NAVBAR ═══════════════════════ --}}
 <header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
     <div class="site-header-glow pointer-events-none absolute inset-x-0 top-0 h-full" aria-hidden="true"></div>
-    <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-8 py-6 lg:px-14 lg:py-7">
+    <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-4 py-5 sm:px-6 sm:py-6 lg:px-14 lg:py-7">
         <a href="/" class="site-header-logo group flex items-center gap-5">
             <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-105" fetchpriority="high" decoding="async" />
         </a>
@@ -101,7 +101,7 @@ $executives = [
         </button>
     </div>
 
-    <div id="mobile-menu" class="site-header-mobile hidden border-t px-8 py-8 backdrop-blur-2xl lg:hidden">
+    <div id="mobile-menu" class="site-header-mobile hidden border-t px-5 py-6 sm:px-8 sm:py-8 backdrop-blur-2xl lg:hidden">
         <nav class="flex flex-col gap-5">
             <button type="button" class="about-trigger js-about-trigger mobile-nav-link w-full text-left">About</button>
             <a href="/#stats" class="mobile-nav-link">Performance</a>
@@ -127,7 +127,7 @@ $executives = [
     </div>
     <div class="grain-overlay" aria-hidden="true"></div>
 
-    <div class="relative z-10 mx-auto w-full max-w-[90rem] px-8 pb-36 pt-48 lg:px-14 lg:pb-48 lg:pt-56">
+    <div class="relative z-10 mx-auto w-full max-w-[90rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-36 lg:px-14 lg:pb-48 lg:pt-56">
 
         <div class="about-hero-item" style="animation-delay:0.1s">
             <p class="mb-8 flex flex-wrap items-center gap-4">
@@ -137,7 +137,7 @@ $executives = [
         </div>
 
         <div class="about-hero-item max-w-5xl" style="animation-delay:0.25s">
-            <h1 class="text-4xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.5rem]">
+            <h1 class="text-3xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.5rem]">
                 Leadership &amp;<br>
                 <span class="bg-linear-to-r from-white via-integrax-blue-light to-white/85 bg-clip-text text-transparent">Management</span>
             </h1>
@@ -149,7 +149,7 @@ $executives = [
             </p>
         </div>
 
-        <div class="about-hero-item mt-14 flex flex-wrap gap-4" style="animation-delay:0.55s">
+        <div class="about-hero-item mt-10 flex flex-wrap gap-4 sm:mt-14" style="animation-delay:0.55s">
             <div class="about-stat-chip rounded-2xl px-7 py-5">
                 <p class="text-2xl font-extrabold tracking-tight text-white">6</p>
                 <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/50">Executives</p>
@@ -178,10 +178,10 @@ $executives = [
     <div class="section-ambient-glow section-ambient-glow--light absolute right-0 bottom-0 h-96 w-96 opacity-60"></div>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-integrax-blue-light/30 to-transparent" aria-hidden="true"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
 
         {{-- Section intro --}}
-        <div class="reveal-up mx-auto mb-24 max-w-3xl text-center">
+        <div class="reveal-up mx-auto mb-16 max-w-3xl text-center lg:mb-24">
             <p class="section-eyebrow">Executive Team</p>
             <h2 class="section-title">Meet the Leaders Behind Integrax</h2>
             <p class="section-lead mx-auto">
@@ -288,8 +288,8 @@ $executives = [
     <div class="section-ambient-glow section-ambient-glow--red absolute -right-20 bottom-0 h-72 w-72 opacity-40"></div>
     <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(94,179,228,0.08),transparent_60%)]"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-        <div class="grid gap-16 lg:grid-cols-12">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+        <div class="grid gap-10 lg:gap-16 lg:grid-cols-12">
             <div class="lg:col-span-5">
                 <a href="/" class="flex items-center gap-5">
                     <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain" loading="lazy" decoding="async" />

@@ -52,7 +52,7 @@
     }
 
     .section-title {
-        @apply mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-integrax-blue md:text-5xl lg:text-[3.25rem];
+        @apply mt-5 text-3xl font-extrabold leading-[1.08] tracking-tight text-integrax-blue sm:text-4xl md:text-5xl lg:text-[3.25rem];
     }
 
     .section-lead {
@@ -60,7 +60,7 @@
     }
 
     .btn-primary {
-        @apply relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-integrax-red px-9 py-4 text-sm font-semibold text-white shadow-glow-red;
+        @apply relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-integrax-red px-6 py-3.5 text-sm font-semibold text-white shadow-glow-red sm:px-9 sm:py-4;
     }
 
     .btn-primary::before {
@@ -73,7 +73,7 @@
     }
 
     .btn-ghost {
-        @apply relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-white/25 bg-white/5 px-9 py-4 text-sm font-semibold text-white backdrop-blur-md;
+        @apply relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-white/25 bg-white/5 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md sm:px-9 sm:py-4;
     }
 
     .site-header {
@@ -250,7 +250,7 @@
 
     .hero-rotator {
         position: relative;
-        min-height: 5rem;
+        min-height: 4rem;
     }
 
     @media (min-width: 640px) {
@@ -272,7 +272,7 @@
     }
 
     .hero-rotator-phrase {
-        @apply max-w-5xl text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl lg:text-[4.5rem] lg:leading-[1.02];
+        @apply max-w-5xl text-3xl font-extrabold leading-[1.02] tracking-tight sm:text-4xl md:text-6xl lg:text-[4.5rem] lg:leading-[1.02];
         position: absolute;
         inset: 0;
         margin: 0;
@@ -294,9 +294,16 @@
     }
 
     .segment-card {
-        @apply relative min-h-[32rem] overflow-hidden rounded-3xl;
+        @apply relative overflow-hidden rounded-3xl;
+        min-height: 24rem;
         transform-style: preserve-3d;
         perspective: 1200px;
+    }
+
+    @media (min-width: 640px) {
+        .segment-card {
+            min-height: 32rem;
+        }
     }
 
     .segment-card::before {
@@ -1668,13 +1675,14 @@
 
         .ldg-feat-identity {
             width: 100%;
-            padding: 2rem 1.75rem 1.5rem;
+            padding: 1.5rem 1.25rem 1.25rem;
+            flex-direction: column;
         }
 
         .ldg-feat-content {
             border-left: none;
             border-top: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 14%, transparent);
-            padding: 1.5rem 1.75rem 2rem;
+            padding: 1.25rem 1.25rem 1.75rem;
         }
     }
 

@@ -102,13 +102,13 @@
 
 
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
 
         <div class="network-reveal network-header mx-auto max-w-3xl text-center">
 
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-red">Regional Operations</p>
 
-            <h2 class="mt-5 text-4xl font-extrabold tracking-tight text-integrax-blue md:text-5xl lg:text-[3.25rem]">
+            <h2 class="mt-5 text-3xl font-extrabold tracking-tight text-integrax-blue sm:text-4xl md:text-5xl lg:text-[3.25rem]">
 
                 Strategic Regional Network
 

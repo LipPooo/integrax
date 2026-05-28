@@ -40,7 +40,7 @@
     {{-- Navbar --}}
     <header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
         <div class="site-header-glow pointer-events-none absolute inset-x-0 top-0 h-full" aria-hidden="true"></div>
-        <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-8 py-6 lg:px-14 lg:py-7">
+        <div class="relative mx-auto flex max-w-[90rem] items-center justify-between px-4 py-5 sm:px-6 sm:py-6 lg:px-14 lg:py-7">
             <a href="#" class="site-header-logo group flex items-center gap-5">
                 <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain transition-transform duration-500 group-hover:scale-105" fetchpriority="high" decoding="async" />
             </a>
@@ -75,7 +75,7 @@
             </button>
         </div>
 
-        <div id="mobile-menu" class="site-header-mobile hidden border-t px-8 py-8 backdrop-blur-2xl lg:hidden">
+        <div id="mobile-menu" class="site-header-mobile hidden border-t px-5 py-6 sm:px-8 sm:py-8 backdrop-blur-2xl lg:hidden">
             <nav class="flex flex-col gap-5">
                 <button type="button" class="about-trigger js-about-trigger mobile-nav-link w-full text-left">About</button>
                 <a href="#stats" class="mobile-nav-link">Performance</a>
@@ -115,7 +115,7 @@
             <div id="hero-particles" class="absolute inset-0"></div>
         </div>
 
-        <div class="hero-content relative z-10 mx-auto w-full max-w-[90rem] px-8 pb-32 pt-36 lg:px-14 lg:pb-40 lg:pt-44">
+        <div class="hero-content relative z-10 mx-auto w-full max-w-[90rem] px-4 pb-20 pt-28 sm:px-6 sm:pb-28 sm:pt-32 lg:px-14 lg:pb-40 lg:pt-44">
             <p class="hero-eyebrow mb-8 flex flex-wrap items-center gap-4">
                 <span class="h-px w-16 bg-integrax-blue-light"></span>
                 <span class="text-[11px] font-semibold uppercase tracking-[0.3em] text-integrax-blue-light">Energy · Maritime · Infrastructure</span>
@@ -138,11 +138,11 @@
                 </span>
             </h1>
 
-            <p class="hero-sub mt-10 max-w-2xl text-lg leading-relaxed text-white/72 md:text-xl md:leading-relaxed">
+            <p class="hero-sub mt-6 max-w-2xl text-lg leading-relaxed text-white/72 sm:mt-10 md:text-xl md:leading-relaxed">
                 A diversified energy and infrastructure group delivering marine excellence, critical assets, and future-ready solutions across ASEAN and international markets.
             </p>
 
-            <div class="hero-cta mt-12 flex flex-wrap gap-5">
+            <div class="hero-cta mt-8 flex flex-wrap gap-4 sm:mt-12 sm:gap-5">
                 <a href="#segments" class="btn-primary">
                     Our Capabilities
                     <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
@@ -171,7 +171,7 @@
         <div class="section-ambient-glow section-ambient-glow--red absolute right-1/3 top-1/4 h-64 w-64 opacity-60"></div>
         <div class="float-subtle pointer-events-none absolute right-1/4 top-1/3 h-2 w-2 rounded-full bg-integrax-blue-light/50 blur-[1px]"></div>
 
-        <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+        <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
             <div id="stats-header" class="mx-auto max-w-2xl text-center">
                 <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-red">Track Record</p>
                 <h2 class="mt-5 text-4xl font-extrabold tracking-tight text-integrax-blue md:text-5xl lg:text-[3.25rem]">
@@ -179,7 +179,7 @@
                 </h2>
             </div>
 
-            <div id="stats-grid" class="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+            <div id="stats-grid" class="mt-12 grid gap-6 sm:mt-20 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4 lg:gap-6">
                 @foreach ([
                     [
                         'display' => '2015',
@@ -202,7 +202,7 @@
                         'detail'  => '3,800 MT/hour operational capability',
                     ],
                 ] as $stat)
-                    <div class="stat-item group rounded-2xl p-10 text-center transition-colors duration-500">
+                    <div class="stat-item group rounded-2xl p-6 text-center transition-colors duration-500 sm:p-10">
                         <p class="text-5xl font-extrabold tracking-tight text-integrax-blue md:text-6xl">
                             {!! $stat['display'] !!}
                         </p>
@@ -221,7 +221,7 @@
         <div class="section-ambient-glow section-ambient-glow--light absolute -right-40 top-20 h-96 w-96 opacity-50"></div>
         <div class="section-ambient-glow section-ambient-glow--light absolute -left-24 bottom-10 h-72 w-72 opacity-40"></div>
 
-        <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+        <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
             <div class="reveal-up max-w-3xl">
                 <p class="section-eyebrow">Our Business</p>
                 <h2 class="section-title">Integrated capabilities across the value chain</h2>
@@ -243,7 +243,7 @@
                             <div class="absolute inset-0 bg-linear-to-t from-integrax-blue via-integrax-blue/75 to-integrax-blue/20"></div>
                             <div class="absolute inset-0 bg-linear-to-br from-integrax-red/10 via-transparent to-integrax-blue-light/15 opacity-0 transition-opacity duration-700 group-hover:opacity-100"></div>
                         </div>
-                        <div class="relative z-10 flex min-h-[32rem] flex-col justify-end p-10 lg:p-11">
+                        <div class="relative z-10 flex min-h-[24rem] flex-col justify-end p-6 sm:min-h-[32rem] sm:p-9 lg:p-11">
                             <span class="text-[10px] font-bold uppercase tracking-[0.22em] text-integrax-blue-light">{{ $segment['tag'] }}</span>
                             <h3 class="mt-3 text-2xl font-bold tracking-tight text-white lg:text-3xl">{{ $segment['title'] }}</h3>
                             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/65 md:text-base">{{ $segment['desc'] }}</p>
@@ -268,8 +268,8 @@
         <div class="section-ambient-glow section-ambient-glow--red absolute left-0 bottom-0 h-64 w-64 opacity-50"></div>
         <div class="pointer-events-none absolute left-1/2 top-0 h-px w-full max-w-5xl -translate-x-1/2 bg-linear-to-r from-transparent via-integrax-blue-light/35 to-transparent" aria-hidden="true"></div>
 
-        <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-            <div class="grid items-center gap-20 lg:grid-cols-2 lg:gap-24">
+        <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+            <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-24">
                 <div class="reveal-up">
                     <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-red">ESG & Sustainability</p>
                     <h2 class="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-integrax-blue md:text-5xl lg:text-[3.25rem]">
@@ -321,8 +321,8 @@
         <div class="section-ambient-glow section-ambient-glow--red absolute -right-20 bottom-0 h-72 w-72 opacity-40"></div>
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(94,179,228,0.08),transparent_60%)]"></div>
 
-        <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
-            <div class="grid gap-16 lg:grid-cols-12">
+        <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
+            <div class="grid gap-10 lg:gap-16 lg:grid-cols-12">
                 <div class="lg:col-span-5">
                     <a href="#" class="flex items-center gap-5">
                         <img src="{{ asset('media/images/logo.png') }}" alt="Integrax Berhad logo" class="h-16 w-18 rounded-2xl object-contain" loading="lazy" decoding="async" />

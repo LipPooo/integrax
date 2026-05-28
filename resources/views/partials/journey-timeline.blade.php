@@ -100,10 +100,10 @@
     <div class="section-ambient-glow section-ambient-glow--light absolute -left-16 bottom-1/4 h-72 w-72 opacity-60"></div>
     <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-integrax-blue-light/30 to-transparent" aria-hidden="true"></div>
 
-    <div class="relative mx-auto max-w-[90rem] px-8 lg:px-14">
+    <div class="relative mx-auto max-w-[90rem] px-4 sm:px-6 lg:px-14">
         <div class="journey-reveal journey-header mx-auto max-w-3xl text-center">
             <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-red">Our Journey</p>
-            <h2 id="journey-heading" class="mt-5 text-4xl font-extrabold tracking-tight text-integrax-blue md:text-5xl lg:text-[3.25rem]">
+            <h2 id="journey-heading" class="mt-5 text-3xl font-extrabold tracking-tight text-integrax-blue sm:text-4xl md:text-5xl lg:text-[3.25rem]">
                 Journey of Integrax Group
             </h2>
         </div>
