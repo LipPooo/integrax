@@ -16,22 +16,22 @@
     $heroLineTwo = ['For', 'Malaysia', '&', 'Beyond'];
     $segments = [
         [
-            'title' => 'Marine Services',
+            'title' => 'Marine & Maritime',
             'desc' => 'Offshore support, vessel operations, and maritime logistics engineered for the most demanding waters.',
             'image' => asset('media/images/INTEGREX_MARINE.jpg'),
             'tag' => 'Offshore & Maritime',
         ],
         [
-            'title' => 'Infrastructure',
-            'desc' => 'Critical asset development, EPC partnerships, and long-term operations that enable national growth.',
+            'title' => 'Coal Handling Services',
+            'desc' => 'Integrated coal handling, storage, and logistics solutions delivering reliable supply chain performance.',
             'image' => asset('media/images/segment-infrastructure.jpg'),
-            'tag' => 'Built Environment',
+            'tag' => 'Energy Logistics',
         ],
         [
-            'title' => 'Energy Solutions',
-            'desc' => 'Power generation, renewables integration, and efficiency programmes for a lower-carbon future.',
+            'title' => 'Future Business',
+            'desc' => 'Pioneering new ventures in renewables, clean energy transitions, and next-generation infrastructure.',
             'image' => asset('media/images/segment-energy.jpg'),
-            'tag' => 'Power & Renewables',
+            'tag' => 'Innovation & Growth',
         ],
     ];
 @endphp
