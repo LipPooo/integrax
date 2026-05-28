@@ -203,7 +203,7 @@
                     ],
                 ] as $stat)
                     <div class="stat-item group rounded-2xl p-6 text-center transition-colors duration-500 sm:p-10">
-                        <p class="text-5xl font-extrabold tracking-tight text-integrax-blue md:text-6xl">
+                        <p class="text-center text-5xl font-extrabold tracking-tight text-integrax-blue md:text-6xl">
                             {!! $stat['display'] !!}
                         </p>
                         <p class="mt-4 text-xs font-bold uppercase tracking-[0.15em] text-integrax-blue-light">{{ $stat['label'] }}</p>
