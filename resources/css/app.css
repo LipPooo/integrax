@@ -609,7 +609,7 @@
     /* Small glowing dot indicator above key milestone year node */
     .journey-key-star {
         display: block;
-        margin: 0 auto 6px;
+        margin: 0 auto 12px;
         width: 5px;
         height: 5px;
         border-radius: 9999px;
