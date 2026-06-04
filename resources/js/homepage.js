@@ -1702,6 +1702,139 @@ function initLeadership() {
     }
 }
 
+function initFutureSplit() {
+    const futureCard = document.querySelector('.segment-card[data-split-reveal]');
+    const overlay = document.getElementById('future-split-overlay');
+
+    if (!futureCard || !overlay) return;
+
+    const backdrop = overlay.querySelector('.future-split-backdrop');
+    const wrap = overlay.querySelector('.future-split-wrap');
+    const leftPanel = overlay.querySelector('.future-split-panel--left');
+    const rightPanel = overlay.querySelector('.future-split-panel--right');
+    const connector = overlay.querySelector('.future-split-connector');
+    const connectorNode = overlay.querySelector('.fsr-connector-node');
+    const closeBtn = overlay.querySelector('.future-split-close');
+    const contentEls = overlay.querySelectorAll('.fsr-content');
+    const ctaLinks = overlay.querySelectorAll('.fsr-cta');
+
+    let isOpen = false;
+    let openTl = null;
+    let closeTl = null;
+
+    const mobile = () => window.innerWidth < 768;
+
+    const openSplit = () => {
+        if (isOpen) return;
+        isOpen = true;
+        closeTl?.kill();
+
+        overlay.classList.add('is-open');
+        overlay.removeAttribute('aria-hidden');
+        document.body.style.overflow = 'hidden';
+
+        gsap.set(backdrop, { opacity: 0 });
+        gsap.set(wrap, { scale: 0.9, autoAlpha: 1 });
+        gsap.set(contentEls, { autoAlpha: 0, y: 20 });
+        gsap.set(connector, { autoAlpha: 0 });
+        gsap.set(connectorNode, { scale: 0 });
+
+        if (mobile()) {
+            gsap.set(leftPanel, { autoAlpha: 0, yPercent: -8, filter: 'blur(10px)' });
+            gsap.set(rightPanel, { autoAlpha: 0, yPercent: 8, filter: 'blur(10px)' });
+        } else {
+            gsap.set(leftPanel, { clipPath: 'inset(0% 0% 0% 100%)', filter: 'blur(14px)', autoAlpha: 1 });
+            gsap.set(rightPanel, { clipPath: 'inset(0% 100% 0% 0%)', filter: 'blur(14px)', autoAlpha: 1 });
+        }
+
+        openTl = gsap.timeline();
+
+        // Card flash
+        openTl.to(futureCard, { scale: 1.03, duration: 0.15, ease: 'power2.out' });
+        // Backdrop
+        openTl.to(backdrop, { opacity: 1, duration: 0.38, ease: 'power2.out' }, '<0.05');
+        // Card reset
+        openTl.to(futureCard, { scale: 1, duration: 0.3, ease: 'power2.inOut' }, '<0.05');
+        // Wrap scale in
+        openTl.to(wrap, { scale: 1, duration: 0.55, ease: 'power3.out' }, '<0.05');
+
+        if (mobile()) {
+            openTl.to(leftPanel, { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, '<0.05');
+            openTl.to(rightPanel, { autoAlpha: 1, yPercent: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out' }, '<0.12');
+        } else {
+            // Cinematic split from center
+            openTl.to(leftPanel, {
+                clipPath: 'inset(0% 0% 0% 0%)',
+                filter: 'blur(0px)',
+                duration: 0.65,
+                ease: 'power3.out',
+            }, '<0.08');
+            openTl.to(rightPanel, {
+                clipPath: 'inset(0% 0% 0% 0%)',
+                filter: 'blur(0px)',
+                duration: 0.65,
+                ease: 'power3.out',
+            }, '<');
+            // Connector reveal
+            openTl.to(connector, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, '-=0.45');
+            openTl.to(connectorNode, { scale: 1, duration: 0.45, ease: 'elastic.out(1.3, 0.5)' }, '-=0.3');
+        }
+
+        // Staggered content
+        openTl.to(contentEls, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.4,
+            stagger: 0.042,
+            ease: 'power2.out',
+        }, '-=0.3');
+    };
+
+    const closeSplit = () => {
+        if (!isOpen) return;
+        isOpen = false;
+        openTl?.kill();
+
+        closeTl = gsap.timeline({
+            onComplete: () => {
+                overlay.classList.remove('is-open');
+                overlay.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (!mobile()) {
+                    gsap.set([leftPanel, rightPanel], { clearProps: 'clipPath,filter' });
+                }
+            },
+        });
+
+        closeTl.to(contentEls, { autoAlpha: 0, y: -10, duration: 0.2, stagger: 0.018, ease: 'power2.in' });
+
+        if (mobile()) {
+            closeTl.to([leftPanel, rightPanel], { autoAlpha: 0, yPercent: -6, filter: 'blur(8px)', duration: 0.32, ease: 'power2.in' }, '-=0.1');
+        } else {
+            closeTl.to(connector, { autoAlpha: 0, duration: 0.2, ease: 'power2.in' }, '<');
+            closeTl.to(leftPanel, { clipPath: 'inset(0% 0% 0% 100%)', filter: 'blur(10px)', duration: 0.4, ease: 'power3.in' }, '-=0.05');
+            closeTl.to(rightPanel, { clipPath: 'inset(0% 100% 0% 0%)', filter: 'blur(10px)', duration: 0.4, ease: 'power3.in' }, '<');
+        }
+
+        closeTl.to(wrap, { scale: 0.92, duration: 0.32, ease: 'power2.in' }, '-=0.15');
+        closeTl.to(backdrop, { opacity: 0, duration: 0.3, ease: 'power2.in' }, '-=0.18');
+    };
+
+    futureCard.addEventListener('click', openSplit);
+    futureCard.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openSplit(); } });
+
+    closeBtn?.addEventListener('click', (e) => { e.stopPropagation(); closeSplit(); });
+    backdrop.addEventListener('click', closeSplit);
+
+    ctaLinks.forEach((link) => {
+        link.addEventListener('click', () => { setTimeout(closeSplit, 80); });
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && isOpen) closeSplit();
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const runSafe = (name, fn) => {
         try {
@@ -1726,6 +1859,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runSafe('Announcements', initAnnouncements);
     runSafe('AboutOverlay', initAboutOverlay);
     runSafe('Leadership', initLeadership);
+    runSafe('FutureSplit', initFutureSplit);
 
     try {
         ScrollTrigger.refresh();

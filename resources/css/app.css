@@ -676,6 +676,257 @@
         }
     }
 
+    /* ── Future Business Split Reveal ───────────────────────── */
+
+    .future-split-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem;
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    .future-split-overlay.is-open {
+        pointer-events: auto;
+        visibility: visible;
+    }
+
+    .future-split-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(6, 14, 28, 0.94);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        opacity: 0;
+    }
+
+    .future-split-wrap {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        max-width: 62rem;
+        flex-direction: column;
+        gap: 1rem;
+        max-height: 88vh;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in oklab, var(--color-integrax-blue-light) 30%, transparent) transparent;
+    }
+
+    @media (min-width: 768px) {
+        .future-split-wrap {
+            flex-direction: row;
+            gap: 0;
+            overflow-y: visible;
+            max-height: none;
+        }
+    }
+
+    .future-split-panel {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        padding: 2.25rem;
+        border: 1px solid;
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+        min-height: 22rem;
+        background: linear-gradient(
+            150deg,
+            color-mix(in oklab, var(--color-integrax-blue-mid) 50%, #05101e),
+            color-mix(in oklab, var(--color-integrax-blue) 78%, #05101e)
+        );
+    }
+
+    @media (min-width: 1024px) {
+        .future-split-panel {
+            padding: 3rem;
+        }
+    }
+
+    .future-split-panel--left {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 22%, transparent);
+        border-radius: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .future-split-panel--left {
+            border-radius: 1.5rem 0 0 1.5rem;
+            border-right-color: transparent;
+        }
+    }
+
+    .future-split-panel--right {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 12%, transparent);
+        border-radius: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+        .future-split-panel--right {
+            border-radius: 0 1.5rem 1.5rem 0;
+            border-left-color: color-mix(in oklab, var(--color-integrax-red) 28%, transparent);
+        }
+    }
+
+    /* Ambient glow blobs inside panels */
+    .fsr-glow {
+        pointer-events: none;
+        position: absolute;
+        border-radius: 9999px;
+        opacity: 0.3;
+    }
+
+    .fsr-glow--tl {
+        top: -3rem;
+        left: -3rem;
+        width: 14rem;
+        height: 14rem;
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-integrax-blue-light) 45%, transparent) 0%, transparent 68%);
+    }
+
+    .fsr-glow--br {
+        bottom: -2.5rem;
+        right: -2.5rem;
+        width: 11rem;
+        height: 11rem;
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-integrax-blue-light) 30%, transparent) 0%, transparent 68%);
+    }
+
+    .fsr-glow--tr-red {
+        top: -3rem;
+        right: -3rem;
+        width: 14rem;
+        height: 14rem;
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-integrax-red) 38%, transparent) 0%, transparent 68%);
+    }
+
+    .fsr-glow--bl-red {
+        bottom: -2.5rem;
+        left: -2.5rem;
+        width: 11rem;
+        height: 11rem;
+        background: radial-gradient(circle, color-mix(in oklab, var(--color-integrax-red) 25%, transparent) 0%, transparent 68%);
+    }
+
+    /* Connector between panels */
+    .future-split-connector {
+        display: none;
+        flex-shrink: 0;
+        flex-direction: column;
+        align-items: center;
+        width: 1px;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .future-split-connector {
+            display: flex;
+        }
+    }
+
+    .fsr-connector-line {
+        flex: 1;
+        width: 1px;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            color-mix(in oklab, var(--color-integrax-red) 55%, var(--color-integrax-blue-light)) 50%,
+            transparent
+        );
+    }
+
+    .fsr-connector-node {
+        flex-shrink: 0;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        background: var(--color-integrax-red);
+        box-shadow:
+            0 0 10px color-mix(in oklab, var(--color-integrax-red) 70%, transparent),
+            0 0 22px color-mix(in oklab, var(--color-integrax-red) 35%, transparent);
+    }
+
+    /* Close button */
+    .future-split-close {
+        position: absolute;
+        top: -3.25rem;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 9999px;
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 24%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-blue-light) 10%, transparent);
+        color: rgba(255, 255, 255, 0.62);
+        transition: background 0.22s, border-color 0.22s, color 0.22s;
+    }
+
+    .future-split-close:hover {
+        background: color-mix(in oklab, var(--color-integrax-blue-light) 20%, transparent);
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 42%, transparent);
+        color: #fff;
+    }
+
+    /* CTA links */
+    .fsr-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        transition: gap 0.3s ease;
+    }
+
+    .fsr-cta:hover {
+        gap: 0.875rem;
+    }
+
+    .fsr-cta--blue {
+        color: var(--color-integrax-blue-glow);
+    }
+
+    .fsr-cta--red {
+        color: var(--color-integrax-red);
+    }
+
+    /* Expand hint badge on the card */
+    .segment-explore-hint {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.375rem 0.75rem 0.375rem 0.625rem;
+        border-radius: 9999px;
+        font-size: 0.5625rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        opacity: 0;
+        transform: translateY(-5px);
+        transition: opacity 0.32s, transform 0.32s;
+    }
+
+    .segment-card[data-split-reveal]:hover .segment-explore-hint {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     /* ── About page ─────────────────────────────────────────── */
 
     .about-hero-item {

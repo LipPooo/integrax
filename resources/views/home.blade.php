@@ -32,6 +32,7 @@
             'desc' => 'Pioneering new ventures in renewables, clean energy transitions, and next-generation infrastructure.',
             'image' => asset('media/images/segment-energy.jpg'),
             'tag' => 'Innovation & Growth',
+            'split_reveal' => true,
         ],
     ];
 @endphp
@@ -232,7 +233,13 @@
 
             <div id="segments-grid" class="mt-20 grid gap-10 lg:grid-cols-3 lg:gap-8">
                 @foreach ($segments as $segment)
-                    <article class="segment-card group cursor-pointer">
+                    <article class="segment-card group cursor-pointer" @if ($segment['split_reveal'] ?? false) data-split-reveal="true" @endif>
+                        @if ($segment['split_reveal'] ?? false)
+                            <div class="segment-explore-hint" aria-hidden="true">
+                                <svg class="h-2.5 w-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg>
+                                Expand
+                            </div>
+                        @endif
                         <div class="segment-card-inner absolute inset-0">
                             <img
                                 src="{{ $segment['image'] }}"
@@ -248,7 +255,7 @@
                             <h3 class="mt-3 text-2xl font-bold tracking-tight text-white lg:text-3xl">{{ $segment['title'] }}</h3>
                             <p class="mt-4 max-w-sm text-sm leading-relaxed text-white/65 md:text-base">{{ $segment['desc'] }}</p>
                             <span class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-integrax-blue-light transition-all duration-500 group-hover:gap-4">
-                                Discover more
+                                @if ($segment['split_reveal'] ?? false) Explore Pathways @else Discover more @endif
                                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
                         </div>
@@ -378,4 +385,78 @@
     </footer>
 
     @include('partials.about-overlay')
+
+    {{-- Future Business Split Reveal --}}
+    <div id="future-split-overlay" class="future-split-overlay" role="dialog" aria-modal="true" aria-label="Future Business" aria-hidden="true">
+        <div class="future-split-backdrop"></div>
+
+        <div class="future-split-wrap">
+            <button type="button" class="future-split-close" aria-label="Close">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            {{-- Left Panel: Clean Energy --}}
+            <div class="future-split-panel future-split-panel--left">
+                <div class="fsr-glow fsr-glow--tl" aria-hidden="true"></div>
+                <div class="fsr-glow fsr-glow--br" aria-hidden="true"></div>
+                <div class="relative z-10 flex h-full flex-col">
+                    <p class="fsr-content text-[10px] font-bold uppercase tracking-[0.24em] text-integrax-blue-glow">Energy Innovation</p>
+                    <h3 class="fsr-content mt-3 text-[1.6rem] font-extrabold leading-tight tracking-tight text-white">Clean Energy<br>Transition</h3>
+                    <div class="fsr-content mt-4 h-px w-10 bg-integrax-blue-light/40"></div>
+                    <p class="fsr-content mt-5 text-sm leading-relaxed text-white/60 md:text-base">
+                        Positioning Integrax at the forefront of Malaysia's decarbonisation journey through strategic investments in clean fuels and renewable integration.
+                    </p>
+                    <ul class="mt-7 flex-1 space-y-3.5">
+                        @foreach (['Green Hydrogen', 'Biomass Co-Firing', 'Carbon Capture (CCUS)', 'Solar Integration'] as $item)
+                            <li class="fsr-content flex items-center gap-3 text-sm text-white/68">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-integrax-blue-light shadow-[0_0_8px_rgba(94,179,228,0.65)]"></span>
+                                {{ $item }}
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="mt-8 border-t border-white/10 pt-6">
+                        <a href="#esg" class="fsr-content fsr-cta fsr-cta--blue group/cta">
+                            Explore Energy Pathways
+                            <svg class="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Connector --}}
+            <div class="future-split-connector" aria-hidden="true">
+                <div class="fsr-connector-line"></div>
+                <div class="fsr-connector-node"></div>
+                <div class="fsr-connector-line"></div>
+            </div>
+
+            {{-- Right Panel: Infrastructure --}}
+            <div class="future-split-panel future-split-panel--right">
+                <div class="fsr-glow fsr-glow--tr-red" aria-hidden="true"></div>
+                <div class="fsr-glow fsr-glow--bl-red" aria-hidden="true"></div>
+                <div class="relative z-10 flex h-full flex-col">
+                    <p class="fsr-content text-[10px] font-bold uppercase tracking-[0.24em] text-integrax-red">Strategic Infrastructure</p>
+                    <h3 class="fsr-content mt-3 text-[1.6rem] font-extrabold leading-tight tracking-tight text-white">Next-Gen<br>Infrastructure</h3>
+                    <div class="fsr-content mt-4 h-px w-10 bg-integrax-red/40"></div>
+                    <p class="fsr-content mt-5 text-sm leading-relaxed text-white/60 md:text-base">
+                        Expanding terminal capabilities and logistics networks to serve evolving regional energy demands and new fuel distribution pathways across ASEAN.
+                    </p>
+                    <ul class="mt-7 flex-1 space-y-3.5">
+                        @foreach (['Regasification Terminals (RGTs)', 'LNG Logistics & Storage', 'Port Digitalisation', 'ASEAN Partnerships'] as $item)
+                            <li class="fsr-content flex items-center gap-3 text-sm text-white/68">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-integrax-red shadow-[0_0_8px_rgba(196,30,58,0.65)]"></span>
+                                {{ $item }}
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="mt-8 border-t border-white/10 pt-6">
+                        <a href="#journey" class="fsr-content fsr-cta fsr-cta--red group/cta">
+                            Discover Growth Opportunities
+                            <svg class="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
