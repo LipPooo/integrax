@@ -50,6 +50,13 @@
             ],
         ],
         [
+            'year' => '2020',
+            'key' => true,
+            'paragraphs' => [
+                'With the establishment of TNB Power Generation Sdn. Bhd. (TNB Genco), Integrax entered a new chapter of strategic growth, strengthening its role in supporting Malaysia\'s evolving energy ecosystem and aligning closely with the nation\'s energy transition agenda.',
+            ],
+        ],
+        [
             'year' => '2022',
             'paragraphs' => [
                 'Provide Marine Services and Marine Superintendent Services at Jimah East Power (JEP) on 1 January 2022',
@@ -124,12 +131,15 @@
                         type="button"
                         role="tab"
                         id="journey-tab-{{ $milestone['year'] }}"
-                        class="journey-year-btn group relative shrink-0 px-3 py-2 md:flex-1 md:px-2 md:py-0 {{ $milestone['year'] === $journeyDefaultYear ? 'is-active' : '' }}"
+                        class="journey-year-btn {{ ($milestone['key'] ?? false) ? 'is-key-milestone' : '' }} group relative shrink-0 px-3 py-2 md:flex-1 md:px-2 md:py-0 {{ $milestone['year'] === $journeyDefaultYear ? 'is-active' : '' }}"
                         data-year="{{ $milestone['year'] }}"
                         data-index="{{ $index }}"
                         aria-selected="{{ $milestone['year'] === $journeyDefaultYear ? 'true' : 'false' }}"
                         aria-controls="journey-panel-{{ $milestone['year'] }}"
                     >
+                        @if ($milestone['key'] ?? false)
+                            <span class="journey-key-star" aria-hidden="true"></span>
+                        @endif
                         <span class="journey-year-node relative z-10 mx-auto mb-3 flex h-3 w-3 items-center justify-center rounded-full border border-integrax-blue/20 bg-white transition-all duration-500 group-hover:border-integrax-blue-light/60 md:mb-4 md:h-3.5 md:w-3.5">
                             <span class="journey-year-node-core h-1 w-1 rounded-full bg-integrax-blue/30 transition-all duration-500"></span>
                         </span>
@@ -152,11 +162,15 @@
                     id="journey-panel-{{ $milestone['year'] }}"
                     class="journey-panel {{ $milestone['year'] === $journeyDefaultYear ? 'is-active' : '' }}"
                     data-year="{{ $milestone['year'] }}"
+                    @if ($milestone['key'] ?? false) data-key-milestone="true" @endif
                     role="tabpanel"
                     aria-labelledby="journey-tab-{{ $milestone['year'] }}"
                     @if ($milestone['year'] !== $journeyDefaultYear) hidden @endif
                 >
-                    <div class="journey-panel-card overflow-hidden rounded-[1.75rem] border border-integrax-blue/10 bg-white/80 shadow-[0_24px_48px_-20px_rgba(10,22,40,0.14)] backdrop-blur-md">
+                    <div class="journey-panel-card {{ ($milestone['key'] ?? false) ? 'journey-panel-card--key relative' : '' }} overflow-hidden rounded-[1.75rem] border border-integrax-blue/10 bg-white/80 shadow-[0_24px_48px_-20px_rgba(10,22,40,0.14)] backdrop-blur-md">
+                        @if ($milestone['key'] ?? false)
+                            <div class="pointer-events-none absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-transparent via-integrax-red/55 to-transparent" aria-hidden="true"></div>
+                        @endif
                         <div class="grid lg:grid-cols-12">
                             <div class="relative hidden overflow-hidden lg:col-span-5 lg:block">
                                 <img
@@ -171,7 +185,15 @@
 
                             <div class="journey-panel-body relative p-8 md:p-10 lg:col-span-7 lg:p-12 xl:p-14">
                                 <div class="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-integrax-red/8 blur-[60px]" aria-hidden="true"></div>
-                                <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-blue-glow">Milestone</p>
+                                @if ($milestone['key'] ?? false)
+                                    <div class="pointer-events-none absolute -left-6 bottom-0 h-36 w-36 rounded-full bg-integrax-red/5 blur-[50px]" aria-hidden="true"></div>
+                                    <span class="journey-strategic-badge">
+                                        <span class="journey-badge-dot h-1.5 w-1.5 rounded-full bg-integrax-red" aria-hidden="true"></span>
+                                        Strategic Milestone
+                                    </span>
+                                @else
+                                    <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-integrax-blue-glow">Milestone</p>
+                                @endif
                                 <p class="journey-panel-year mt-3 text-5xl font-extrabold tracking-tight text-integrax-blue md:text-6xl">{{ $milestone['year'] }}</p>
 
                                 <div class="journey-panel-text mt-8 space-y-5 text-base leading-relaxed text-integrax-blue/75 md:text-lg md:leading-relaxed">

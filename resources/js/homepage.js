@@ -933,6 +933,25 @@ function initJourneyTimeline() {
                 '-=0.3',
             );
         }
+
+        if (nextPanel.dataset.keyMilestone && !prefersReducedMotion) {
+            const badge = nextPanel.querySelector('.journey-strategic-badge');
+            const keyDot = section.querySelector(`.journey-year-btn[data-year="${year}"] .journey-key-star`);
+
+            if (badge) {
+                contentTl.from(
+                    badge,
+                    { autoAlpha: 0, scale: 0.75, duration: 0.5, ease: 'back.out(2)' },
+                    '-=0.4',
+                );
+            }
+
+            if (keyDot) {
+                contentTl
+                    .to(keyDot, { scale: 1.7, duration: 0.22, ease: 'power2.out' }, '<0.1')
+                    .to(keyDot, { scale: 1, duration: 0.55, ease: 'elastic.out(1.1, 0.4)' });
+            }
+        }
     };
 
     yearButtons.forEach((btn) => {

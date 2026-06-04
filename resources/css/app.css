@@ -580,6 +580,96 @@
         @apply pointer-events-auto visible relative opacity-100;
     }
 
+    /* Key milestone year tab */
+    .journey-year-btn.is-key-milestone .journey-year-label {
+        color: color-mix(in oklab, var(--color-integrax-red) 62%, var(--color-integrax-blue));
+    }
+
+    .journey-year-btn.is-key-milestone .journey-year-node {
+        border-color: color-mix(in oklab, var(--color-integrax-red) 42%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-red) 7%, white);
+    }
+
+    .journey-year-btn.is-key-milestone .journey-year-node-core {
+        background: var(--color-integrax-red);
+        opacity: 0.6;
+    }
+
+    .journey-year-btn.is-active.is-key-milestone .journey-year-node {
+        @apply border-integrax-red/65 bg-integrax-red/12;
+        box-shadow: 0 0 20px color-mix(in oklab, var(--color-integrax-red) 52%, transparent),
+            0 0 40px color-mix(in oklab, var(--color-integrax-red) 22%, transparent);
+    }
+
+    .journey-year-btn.is-active.is-key-milestone .journey-year-node-core {
+        @apply h-2 w-2 bg-integrax-red;
+        box-shadow: 0 0 10px color-mix(in oklab, var(--color-integrax-red) 80%, transparent);
+    }
+
+    /* Small glowing dot indicator above key milestone year node */
+    .journey-key-star {
+        display: block;
+        margin: 0 auto 6px;
+        width: 5px;
+        height: 5px;
+        border-radius: 9999px;
+        background: var(--color-integrax-red);
+        box-shadow:
+            0 0 8px color-mix(in oklab, var(--color-integrax-red) 70%, transparent),
+            0 0 18px color-mix(in oklab, var(--color-integrax-red) 35%, transparent);
+        animation: key-star-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes key-star-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.55; transform: scale(0.8); }
+    }
+
+    /* Strategic milestone badge */
+    .journey-strategic-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 14px 5px 10px;
+        border-radius: 9999px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--color-integrax-red);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-red) 28%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-red) 6%, white);
+        box-shadow:
+            0 0 20px color-mix(in oklab, var(--color-integrax-red) 8%, transparent),
+            inset 0 1px 0 color-mix(in oklab, white 75%, transparent);
+    }
+
+    @keyframes journey-badge-dot-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.35; }
+    }
+
+    .journey-badge-dot {
+        animation: journey-badge-dot-pulse 2.2s ease-in-out infinite;
+    }
+
+    /* Key milestone panel card enhanced shadow */
+    .journey-section .journey-panel.is-active .journey-panel-card--key {
+        border-color: color-mix(in oklab, var(--color-integrax-red) 24%, var(--color-integrax-blue-light) 10%);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-red) 13%, transparent),
+            0 32px 72px -22px color-mix(in oklab, var(--color-integrax-blue) 26%, transparent),
+            0 0 90px -10px color-mix(in oklab, var(--color-integrax-red) 9%, transparent),
+            inset 0 1px 0 color-mix(in oklab, white 65%, transparent);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .journey-key-star,
+        .journey-badge-dot {
+            animation: none;
+        }
+    }
+
     /* ── About page ─────────────────────────────────────────── */
 
     .about-hero-item {
