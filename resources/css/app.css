@@ -581,6 +581,10 @@
     }
 
     /* Key milestone year tab */
+    .journey-year-btn.is-key-milestone {
+        transform: translateY(-10px);
+    }
+
     .journey-year-btn.is-key-milestone .journey-year-label {
         color: color-mix(in oklab, var(--color-integrax-red) 62%, var(--color-integrax-blue));
     }
