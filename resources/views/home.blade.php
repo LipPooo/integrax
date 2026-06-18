@@ -99,7 +99,7 @@
                 loop
                 playsinline
             >
-                <source src="{{ asset('media/videos/drone_footage_web.mp4') }}" type="video/mp4">
+                <source src="https://pub-b4afda5e203f4d8385a8430f1539ed3e.r2.dev/drone_footage.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-linear-to-r from-integrax-blue via-integrax-blue/75 to-integrax-blue/40"></div>
             <div class="absolute inset-0 bg-linear-to-t from-integrax-blue via-integrax-blue/30 to-transparent"></div>
