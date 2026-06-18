@@ -1018,6 +1018,158 @@
     }
 }
 
+/* ============================================================
+   ACHIEVEMENT PAGE
+   ============================================================ */
+
+@layer components {
+
+    .ach-hero-item {
+        opacity: 0;
+        transform: translateY(32px);
+        animation: ach-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ach-hero-item {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    /* ── Flow bridges ─────────────────────────────────────── */
+
+    .ach-flow-bridge--hero-overview {
+        @apply bottom-0 h-44;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 55%, transparent) 35%,
+            color-mix(in oklab, var(--color-integrax-blue) 82%, var(--color-integrax-blue-pale)) 70%,
+            var(--color-integrax-blue-pale) 100%
+        );
+    }
+
+    .ach-flow-bridge--overview-cards {
+        @apply bottom-0 h-36;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue-pale-mid) 65%, transparent) 40%,
+            color-mix(in oklab, var(--color-integrax-blue-pale) 50%, white) 75%,
+            #ffffff 100%
+        );
+    }
+
+    .ach-flow-bridge--cards-timeline {
+        @apply bottom-0 h-40;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 55%, transparent) 40%,
+            var(--color-integrax-blue) 100%
+        );
+    }
+
+    .ach-flow-bridge--timeline-excellence {
+        @apply bottom-0 h-44;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 55%, transparent) 35%,
+            color-mix(in oklab, var(--color-integrax-blue) 82%, var(--color-integrax-blue-pale)) 70%,
+            var(--color-integrax-blue-pale) 100%
+        );
+    }
+
+    /* ── Certification cards ──────────────────────────────── */
+
+    .ach-cert-card {
+        transition:
+            transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            box-shadow 0.4s ease,
+            border-color 0.4s ease;
+        will-change: transform;
+    }
+
+    .ach-cert-card:hover {
+        transform: translateY(-6px);
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 38%, transparent);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 18%, transparent),
+            0 24px 64px -14px rgba(10, 22, 40, 0.18),
+            0 0 52px -20px color-mix(in oklab, var(--color-integrax-blue-glow) 18%, transparent);
+    }
+
+    .ach-cert-icon {
+        background: linear-gradient(
+            135deg,
+            var(--color-integrax-blue-glow),
+            var(--color-integrax-blue-light)
+        );
+    }
+
+    .ach-year-badge {
+        background: color-mix(in oklab, var(--color-integrax-blue-pale) 70%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 25%, transparent);
+        color: var(--color-integrax-blue-glow);
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    /* ── Timeline ─────────────────────────────────────────── */
+
+    .ach-timeline-node {
+        transition: box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .ach-timeline-item:hover .ach-timeline-node {
+        transform: scale(1.08);
+    }
+
+    /* ── Principle cards ──────────────────────────────────── */
+
+    .ach-principle-card {
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .ach-principle-card:hover {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 32%, transparent);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 12%, transparent),
+            0 12px 40px -12px rgba(10, 22, 40, 0.10);
+        transform: translateY(-3px);
+    }
+
+    /* ── Outline button ───────────────────────────────────── */
+
+    .ach-btn-outline {
+        @apply relative inline-flex items-center gap-2.5 rounded-full border border-integrax-blue/18 bg-integrax-blue/5 px-6 py-3.5 text-sm font-semibold text-integrax-blue sm:px-9 sm:py-4;
+        transition: border-color 0.25s ease, background-color 0.25s ease;
+    }
+
+    .ach-btn-outline:hover {
+        @apply border-integrax-blue/30 bg-integrax-blue/8;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ach-cert-card,
+        .ach-principle-card {
+            transition: none;
+        }
+    }
+}
+
+@keyframes ach-fade-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes map-pulse {
     0%,
     100% {

@@ -1835,6 +1835,71 @@ function initFutureSplit() {
     });
 }
 
+function initAchievementPage() {
+    if (!document.querySelector('.ach-hero-section')) return;
+
+    if (prefersReducedMotion) return;
+
+    if (!isMobileDevice) {
+        gsap.to('.ach-orb', {
+            x: 28,
+            y: -20,
+            duration: 7,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+            stagger: { each: 1.5, from: 'random' },
+        });
+    }
+
+    gsap.from('.ach-cert-card', {
+        autoAlpha: 0,
+        y: 64,
+        duration: 1.05,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.ach-cards-section',
+            start: 'top 78%',
+        },
+    });
+
+    gsap.from('.ach-timeline-line', {
+        scaleY: 0,
+        transformOrigin: 'top center',
+        duration: 1.6,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.ach-timeline-section',
+            start: 'top 75%',
+        },
+    });
+
+    gsap.from('.ach-timeline-item', {
+        autoAlpha: 0,
+        y: 44,
+        duration: 1,
+        stagger: 0.3,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.ach-timeline-section',
+            start: 'top 72%',
+        },
+    });
+
+    gsap.from('.ach-principle-card', {
+        autoAlpha: 0,
+        y: 36,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.ach-principle-card',
+            start: 'top 82%',
+        },
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const runSafe = (name, fn) => {
         try {
@@ -1860,6 +1925,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runSafe('AboutOverlay', initAboutOverlay);
     runSafe('Leadership', initLeadership);
     runSafe('FutureSplit', initFutureSplit);
+    runSafe('AchievementPage', initAchievementPage);
 
     try {
         ScrollTrigger.refresh();
