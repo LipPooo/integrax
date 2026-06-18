@@ -1900,6 +1900,348 @@ function initAchievementPage() {
     });
 }
 
+function initGovernancePage() {
+    if (!document.querySelector('.gov-hero-section')) return;
+
+    // ── Principle data ────────────────────────────────────────────
+    const principles = [
+        {
+            name: 'Transparency',
+            desc: 'Clear and timely disclosure of material information enables informed decision-making by all stakeholders and builds enduring trust in Integrax\'s operations and governance.',
+            points: [
+                'Timely disclosure of all material information',
+                'Accessible and transparent financial reporting',
+                'Open communication channels with all stakeholders',
+            ],
+        },
+        {
+            name: 'Accountability',
+            desc: 'The Board and management are accountable for their decisions and outcomes to shareholders and all relevant stakeholders through well-defined responsibilities and oversight mechanisms.',
+            points: [
+                'Clear responsibilities for Board and management',
+                'Defined performance metrics and Board oversight',
+                'Regular and transparent reporting to shareholders',
+            ],
+        },
+        {
+            name: 'Responsibility',
+            desc: 'Responsible conduct across all business activities, fully aligned with ethical standards, applicable regulatory frameworks, and the expectations of every stakeholder group.',
+            points: [
+                'Compliance with all applicable laws and regulations',
+                'Responsible stewardship of company assets and resources',
+                'Ethical conduct embedded in all business activities',
+            ],
+        },
+        {
+            name: 'Fairness',
+            desc: 'Equitable and fair treatment of all shareholders and stakeholders, including minority shareholders and employees, in every governance decision and business interaction.',
+            points: [
+                'Equal treatment of minority and majority shareholders',
+                'Fair consideration of all stakeholder interests',
+                'Transparent and equitable governance processes',
+            ],
+        },
+        {
+            name: 'Independence',
+            desc: 'Objective and independent judgment in all Board deliberations and management decisions, free from undue influence, conflicts of interest, or external pressures that could compromise integrity.',
+            points: [
+                'Independent Board judgment free from conflicts of interest',
+                'Separation of executive and supervisory roles',
+                'Objective risk assessment and independent oversight',
+            ],
+        },
+    ];
+
+    if (!prefersReducedMotion && !isMobileDevice) {
+        // Ambient orb drift
+        gsap.to('.gov-orb', {
+            x: 22,
+            y: -18,
+            duration: 8,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+            stagger: { each: 1.8, from: 'random' },
+        });
+    }
+
+    // ── Desktop hub ───────────────────────────────────────────────
+    const canvas = document.getElementById('gov-hub-canvas');
+    const svg = document.getElementById('gov-hub-svg');
+    const hubCenter = document.getElementById('gov-hub-center');
+    const nodes = document.querySelectorAll('.gov-principle-node');
+    const panelIdle = document.getElementById('gov-panel-idle');
+    const panelContent = document.getElementById('gov-panel-content');
+
+    if (canvas && svg && hubCenter && nodes.length) {
+        // Draw lines after layout is stable
+        requestAnimationFrame(() => {
+            const canvasRect = canvas.getBoundingClientRect();
+            const centerRect = hubCenter.getBoundingClientRect();
+            const cx = centerRect.left - canvasRect.left + centerRect.width / 2;
+            const cy = centerRect.top - canvasRect.top + centerRect.height / 2;
+
+            nodes.forEach((node, i) => {
+                const nodeRect = node.getBoundingClientRect();
+                const nx = nodeRect.left - canvasRect.left + nodeRect.width / 2;
+                const ny = nodeRect.top - canvasRect.top + nodeRect.height / 2;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                const d = `M ${cx},${cy} L ${nx},${ny}`;
+                path.setAttribute('d', d);
+                path.setAttribute('class', 'gov-hub-line');
+                path.setAttribute('data-idx', i);
+                path.setAttribute('filter', 'url(#gov-line-glow)');
+                svg.appendChild(path);
+
+                if (!prefersReducedMotion) {
+                    const len = path.getTotalLength();
+                    path.style.strokeDasharray = len;
+                    path.style.strokeDashoffset = len;
+                    gsap.to(path, {
+                        strokeDashoffset: 0,
+                        duration: 1.1,
+                        delay: 0.4 + i * 0.12,
+                        ease: 'power3.out',
+                    });
+                }
+            });
+        });
+
+        // Node click handler
+        let activeIdx = -1;
+
+        nodes.forEach((node) => {
+            node.addEventListener('click', () => {
+                const idx = parseInt(node.dataset.idx, 10);
+                const data = principles[idx];
+
+                if (activeIdx === idx) {
+                    // Deselect
+                    activeIdx = -1;
+                    nodes.forEach((n) => n.classList.remove('is-active'));
+                    document.querySelectorAll('.gov-hub-line').forEach((l) => l.classList.remove('is-active'));
+
+                    if (panelContent) {
+                        gsap.to(panelContent, {
+                            autoAlpha: 0,
+                            y: 10,
+                            duration: 0.25,
+                            onComplete: () => {
+                                panelContent.style.display = 'none';
+                                if (panelIdle) {
+                                    panelIdle.style.display = 'flex';
+                                    gsap.fromTo(panelIdle, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 });
+                                }
+                            },
+                        });
+                    }
+                    return;
+                }
+
+                activeIdx = idx;
+                nodes.forEach((n) => n.classList.toggle('is-active', n.dataset.idx === String(idx)));
+                document.querySelectorAll('.gov-hub-line').forEach((l) => {
+                    l.classList.toggle('is-active', parseInt(l.dataset.idx, 10) === idx);
+                });
+
+                // Populate panel
+                const titleEl = document.getElementById('gov-panel-title');
+                const descEl = document.getElementById('gov-panel-desc');
+                const pointsEl = document.getElementById('gov-panel-points');
+
+                if (titleEl) titleEl.textContent = data.name;
+                if (descEl) descEl.textContent = data.desc;
+                if (pointsEl) {
+                    pointsEl.innerHTML = data.points
+                        .map((p) => `<li class="gov-panel-point">${p}</li>`)
+                        .join('');
+                }
+
+                const showPanel = () => {
+                    if (panelContent) {
+                        panelContent.style.display = 'block';
+                        gsap.fromTo(
+                            panelContent,
+                            { autoAlpha: 0, y: 20 },
+                            { autoAlpha: 1, y: 0, duration: 0.45, ease: 'power3.out' }
+                        );
+                    }
+                };
+
+                if (panelIdle && panelIdle.style.display !== 'none') {
+                    gsap.to(panelIdle, {
+                        autoAlpha: 0,
+                        duration: 0.2,
+                        onComplete: () => {
+                            panelIdle.style.display = 'none';
+                            showPanel();
+                        },
+                    });
+                } else if (panelContent) {
+                    gsap.fromTo(
+                        panelContent,
+                        { autoAlpha: 0, y: 12 },
+                        { autoAlpha: 1, y: 0, duration: 0.35, ease: 'power3.out' }
+                    );
+                    panelContent.style.display = 'block';
+                    if (titleEl) titleEl.textContent = data.name;
+                    if (descEl) descEl.textContent = data.desc;
+                    if (pointsEl) {
+                        pointsEl.innerHTML = data.points
+                            .map((p) => `<li class="gov-panel-point">${p}</li>`)
+                            .join('');
+                    }
+                }
+            });
+        });
+    }
+
+    // ── Mobile accordion ──────────────────────────────────────────
+    document.querySelectorAll('.gov-accordion-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.gov-accordion-item');
+            const body = item.querySelector('.gov-accordion-body');
+            const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+            // Close all
+            document.querySelectorAll('.gov-accordion-item').forEach((otherItem) => {
+                if (otherItem !== item) {
+                    const otherBtn = otherItem.querySelector('.gov-accordion-btn');
+                    const otherBody = otherItem.querySelector('.gov-accordion-body');
+                    if (otherBtn && otherBtn.getAttribute('aria-expanded') === 'true') {
+                        otherBtn.setAttribute('aria-expanded', 'false');
+                        if (otherBody && !prefersReducedMotion) {
+                            gsap.to(otherBody, {
+                                height: 0,
+                                opacity: 0,
+                                duration: 0.28,
+                                ease: 'power2.inOut',
+                                onComplete: () => { otherBody.hidden = true; },
+                            });
+                        } else if (otherBody) {
+                            otherBody.hidden = true;
+                        }
+                    }
+                }
+            });
+
+            if (isOpen) {
+                btn.setAttribute('aria-expanded', 'false');
+                if (!prefersReducedMotion) {
+                    gsap.to(body, {
+                        height: 0,
+                        opacity: 0,
+                        duration: 0.28,
+                        ease: 'power2.inOut',
+                        onComplete: () => { body.hidden = true; },
+                    });
+                } else {
+                    body.hidden = true;
+                }
+            } else {
+                btn.setAttribute('aria-expanded', 'true');
+                body.hidden = false;
+                if (!prefersReducedMotion) {
+                    gsap.fromTo(body, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: 0.35, ease: 'power3.out' });
+                }
+            }
+        });
+    });
+
+    // ── Policy card expand/collapse ───────────────────────────────
+    document.querySelectorAll('.gov-policy-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const card = btn.closest('.gov-policy-card');
+            const body = card.querySelector('.gov-policy-expand');
+            const isOpen = card.classList.contains('is-open');
+
+            // Close all others
+            document.querySelectorAll('.gov-policy-card.is-open').forEach((openCard) => {
+                if (openCard !== card) {
+                    openCard.classList.remove('is-open');
+                    const openBtn = openCard.querySelector('.gov-policy-btn');
+                    const openBody = openCard.querySelector('.gov-policy-expand');
+                    if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+                    if (openBody && !prefersReducedMotion) {
+                        gsap.to(openBody, {
+                            height: 0,
+                            opacity: 0,
+                            duration: 0.28,
+                            ease: 'power2.inOut',
+                            onComplete: () => { openBody.hidden = true; },
+                        });
+                    } else if (openBody) {
+                        openBody.hidden = true;
+                    }
+                }
+            });
+
+            if (isOpen) {
+                card.classList.remove('is-open');
+                btn.setAttribute('aria-expanded', 'false');
+                if (!prefersReducedMotion) {
+                    gsap.to(body, {
+                        height: 0,
+                        opacity: 0,
+                        duration: 0.28,
+                        ease: 'power2.inOut',
+                        onComplete: () => { body.hidden = true; },
+                    });
+                } else {
+                    body.hidden = true;
+                }
+            } else {
+                card.classList.add('is-open');
+                btn.setAttribute('aria-expanded', 'true');
+                body.hidden = false;
+                if (!prefersReducedMotion) {
+                    gsap.fromTo(body, { height: 0, opacity: 0 }, { height: 'auto', opacity: 1, duration: 0.38, ease: 'power3.out' });
+                }
+            }
+        });
+    });
+
+    // ── Scroll-triggered reveals ──────────────────────────────────
+    if (!prefersReducedMotion) {
+        gsap.from('.gov-action-card', {
+            autoAlpha: 0,
+            y: 40,
+            duration: 0.9,
+            stagger: 0.15,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.gov-action-section',
+                start: 'top 78%',
+            },
+        });
+
+        gsap.from('.gov-policy-card', {
+            autoAlpha: 0,
+            y: 32,
+            duration: 0.85,
+            stagger: 0.08,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.gov-policies-section',
+                start: 'top 76%',
+            },
+        });
+
+        // Hub nodes stagger in on desktop
+        if (!isMobileDevice && nodes.length) {
+            gsap.from(nodes, {
+                autoAlpha: 0,
+                scale: 0.75,
+                duration: 0.7,
+                stagger: 0.12,
+                ease: 'back.out(1.5)',
+                delay: 0.6,
+            });
+        }
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const runSafe = (name, fn) => {
         try {
@@ -1926,6 +2268,7 @@ document.addEventListener('DOMContentLoaded', () => {
     runSafe('Leadership', initLeadership);
     runSafe('FutureSplit', initFutureSplit);
     runSafe('AchievementPage', initAchievementPage);
+    runSafe('GovernancePage', initGovernancePage);
 
     try {
         ScrollTrigger.refresh();

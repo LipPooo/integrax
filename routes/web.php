@@ -19,6 +19,10 @@ Route::get('/achievement', function () {
     return view('achievement');
 });
 
+Route::get('/governance', function () {
+    return view('governance');
+});
+
 // Announcement detail — replace closure body with AnnouncementController@show + DB query when ready
 Route::get('/announcements/{slug}', function (string $slug) {
     $announcements = collect(View::getShared()['announcements'] ?? []);

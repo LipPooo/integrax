@@ -2694,3 +2694,694 @@
         -webkit-backdrop-filter: blur(16px);
     }
 }
+
+/* ============================================================
+   GOVERNANCE PAGE
+   ============================================================ */
+
+@layer components {
+
+    /* ── Hero animation ───────────────────────────────────── */
+
+    .gov-hero-item {
+        opacity: 0;
+        transform: translateY(32px);
+        animation: gov-fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .gov-hero-item {
+            animation: none;
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    /* ── Flow bridges ─────────────────────────────────────── */
+
+    .gov-flow-bridge--hero-hub {
+        bottom: 0;
+        height: 6rem;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 60%, transparent) 50%,
+            var(--color-integrax-blue) 100%
+        );
+    }
+
+    .gov-flow-bridge--hub-policies {
+        bottom: 0;
+        height: 10rem;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 55%, transparent) 35%,
+            color-mix(in oklab, var(--color-integrax-blue) 82%, var(--color-integrax-blue-pale)) 70%,
+            var(--color-integrax-blue-pale) 100%
+        );
+    }
+
+    .gov-flow-bridge--policies-action {
+        bottom: 0;
+        height: 9rem;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue-pale) 55%, transparent) 30%,
+            color-mix(in oklab, var(--color-integrax-blue) 65%, transparent) 65%,
+            var(--color-integrax-blue) 100%
+        );
+    }
+
+    .gov-flow-bridge--action-nav {
+        bottom: 0;
+        height: 10rem;
+        background: linear-gradient(
+            180deg,
+            transparent 0%,
+            color-mix(in oklab, var(--color-integrax-blue) 55%, transparent) 35%,
+            color-mix(in oklab, var(--color-integrax-blue) 82%, var(--color-integrax-blue-pale)) 70%,
+            var(--color-integrax-blue-pale) 100%
+        );
+    }
+
+    /* ── Governance hub canvas ────────────────────────────── */
+
+    .gov-hub-center {
+        transform: translate(-50%, -50%);
+        width: 10rem;
+        height: 10rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .gov-hub-ring {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50%;
+        border-style: solid;
+        transform: translate(-50%, -50%);
+    }
+
+    .gov-hub-ring--outer {
+        width: 10rem;
+        height: 10rem;
+        border-width: 1px;
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 28%, transparent);
+        animation: about-ring-spin 22s linear infinite;
+    }
+
+    .gov-hub-ring--outer::before {
+        content: '';
+        position: absolute;
+        top: 9px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 75%, transparent);
+        box-shadow: 0 0 8px 2px color-mix(in oklab, var(--color-integrax-blue-glow) 50%, transparent);
+    }
+
+    .gov-hub-ring--mid {
+        width: 7.75rem;
+        height: 7.75rem;
+        border-width: 1px;
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 20%, transparent);
+        animation: about-ring-spin 14s linear infinite reverse;
+    }
+
+    .gov-hub-ring--mid::before {
+        content: '';
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: color-mix(in oklab, var(--color-integrax-red) 80%, transparent);
+    }
+
+    .gov-hub-core {
+        position: relative;
+        width: 6.5rem;
+        height: 6.5rem;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.15rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 85%, transparent);
+        backdrop-filter: blur(20px) saturate(1.3);
+        -webkit-backdrop-filter: blur(20px) saturate(1.3);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 30%, transparent);
+        box-shadow:
+            0 0 50px -8px color-mix(in oklab, var(--color-integrax-blue-glow) 30%, transparent),
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 14%, transparent),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .gov-hub-brand {
+        font-size: 0.52rem;
+        font-weight: 800;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--color-integrax-blue-light);
+        line-height: 1;
+    }
+
+    .gov-hub-label {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #ffffff;
+        line-height: 1;
+    }
+
+    .gov-hub-sublabel {
+        font-size: 0.52rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        line-height: 1;
+    }
+
+    /* ── Principle nodes ──────────────────────────────────── */
+
+    .gov-principle-node {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.85rem 0.75rem;
+        border-radius: 0.875rem;
+        width: 7.5rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 70%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 20%, transparent);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-glow) 8%, transparent),
+            0 12px 32px -8px color-mix(in oklab, var(--color-integrax-blue) 40%, transparent);
+        cursor: pointer;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        will-change: transform;
+        z-index: 10;
+    }
+
+    .gov-principle-node:hover {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 50%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 90%, transparent);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 20%, transparent),
+            0 16px 40px -8px color-mix(in oklab, var(--color-integrax-blue) 45%, transparent),
+            0 0 28px -8px color-mix(in oklab, var(--color-integrax-blue-glow) 22%, transparent);
+        transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    .gov-principle-node.is-active {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 65%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 22%, var(--color-integrax-blue-mid));
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 30%, transparent),
+            0 0 32px -6px color-mix(in oklab, var(--color-integrax-blue-glow) 35%, transparent),
+            0 16px 40px -8px color-mix(in oklab, var(--color-integrax-blue) 40%, transparent);
+    }
+
+    .gov-node-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.625rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 16%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 24%, transparent);
+        color: var(--color-integrax-blue-light);
+        flex-shrink: 0;
+        transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .gov-principle-node.is-active .gov-node-icon,
+    .gov-principle-node:hover .gov-node-icon {
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 28%, transparent);
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 50%, transparent);
+    }
+
+    .gov-node-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        color: rgba(255, 255, 255, 0.72);
+        line-height: 1.2;
+        text-align: center;
+        transition: color 0.3s ease;
+    }
+
+    .gov-principle-node.is-active .gov-node-label,
+    .gov-principle-node:hover .gov-node-label {
+        color: #ffffff;
+    }
+
+    /* ── Hub SVG lines ────────────────────────────────────── */
+
+    .gov-hub-line {
+        stroke: color-mix(in oklab, var(--color-integrax-blue-glow) 30%, transparent);
+        stroke-width: 1;
+        fill: none;
+        filter: url(#gov-line-glow);
+        transition: stroke 0.35s ease, stroke-width 0.35s ease, opacity 0.35s ease;
+    }
+
+    .gov-hub-line.is-active {
+        stroke: color-mix(in oklab, var(--color-integrax-blue-light) 65%, transparent);
+        stroke-width: 1.5;
+    }
+
+    /* ── Principle detail panel ───────────────────────────── */
+
+    .gov-principle-panel {
+        min-height: 320px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+
+    .gov-panel-idle {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 2.5rem;
+        border-radius: 1.25rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 55%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 14%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        width: 100%;
+        min-height: 300px;
+    }
+
+    .gov-panel-idle-icon {
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 14%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 24%, transparent);
+        color: color-mix(in oklab, var(--color-integrax-blue-light) 65%, transparent);
+    }
+
+    .gov-panel-idle-pip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 0.35rem;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        color: color-mix(in oklab, var(--color-integrax-blue-light) 40%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 14%, transparent);
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 8%, transparent);
+    }
+
+    .gov-panel-content {
+        padding: 2.5rem;
+        border-radius: 1.25rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 60%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 22%, transparent);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 8%, transparent),
+            0 20px 60px -16px color-mix(in oklab, var(--color-integrax-blue-deep) 35%, transparent),
+            0 0 48px -12px color-mix(in oklab, var(--color-integrax-blue-glow) 12%, transparent),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .gov-panel-eyebrow {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--color-integrax-red);
+        margin-bottom: 1rem;
+    }
+
+    .gov-panel-title {
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+        color: #ffffff;
+        line-height: 1.15;
+        margin-bottom: 1rem;
+    }
+
+    .gov-panel-desc {
+        font-size: 0.9rem;
+        line-height: 1.72;
+        color: rgba(255, 255, 255, 0.62);
+        margin-bottom: 1.5rem;
+    }
+
+    .gov-panel-points {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+
+    .gov-panel-point {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.65rem;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.52);
+    }
+
+    .gov-panel-point::before {
+        content: '';
+        flex-shrink: 0;
+        margin-top: 0.45em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--color-integrax-blue-glow);
+        box-shadow: 0 0 6px color-mix(in oklab, var(--color-integrax-blue-glow) 60%, transparent);
+    }
+
+    .gov-panel-accent {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            var(--color-integrax-red) 25%,
+            var(--color-integrax-blue-glow) 65%,
+            transparent 100%
+        );
+    }
+
+    /* ── Mobile principle accordion ──────────────────────── */
+
+    .gov-accordion-item {
+        border-radius: 0.875rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 55%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 16%, transparent);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        overflow: hidden;
+        transition: border-color 0.25s ease;
+    }
+
+    .gov-accordion-item:has(.gov-accordion-btn[aria-expanded="true"]) {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 32%, transparent);
+    }
+
+    .gov-accordion-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+        width: 100%;
+        padding: 1rem 1.125rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .gov-accordion-icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 0.6rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 14%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 22%, transparent);
+        color: var(--color-integrax-blue-light);
+    }
+
+    .gov-accordion-name {
+        flex: 1;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .gov-accordion-chevron {
+        color: color-mix(in oklab, var(--color-integrax-blue-light) 45%, transparent);
+    }
+
+    .gov-accordion-btn[aria-expanded="true"] .gov-accordion-chevron {
+        transform: rotate(180deg);
+        color: var(--color-integrax-blue-light);
+    }
+
+    .gov-accordion-body {
+        padding: 0 1.125rem 1.125rem 4.25rem;
+    }
+
+    .gov-accordion-desc {
+        font-size: 0.85rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.55);
+    }
+
+    /* ── Policy cards ─────────────────────────────────────── */
+
+    .gov-policy-card {
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 22%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.85) inset,
+            0 4px 24px -8px rgba(10, 22, 40, 0.07);
+        overflow: hidden;
+        transition: border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+
+    .gov-policy-card.is-open {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-glow) 42%, transparent);
+        box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.9) inset,
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 20%, transparent),
+            0 8px 36px -10px rgba(10, 22, 40, 0.10),
+            0 0 32px -12px color-mix(in oklab, var(--color-integrax-blue-glow) 14%, transparent);
+    }
+
+    .gov-policy-btn {
+        padding: 1.25rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .gov-policy-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.625rem;
+        flex-shrink: 0;
+        transition: background 0.25s ease;
+    }
+
+    .gov-policy-icon--blue {
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 12%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 22%, transparent);
+        color: var(--color-integrax-blue-glow);
+    }
+
+    .gov-policy-card.is-open .gov-policy-icon--blue {
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 18%, transparent);
+    }
+
+    .gov-policy-icon--red {
+        background: color-mix(in oklab, var(--color-integrax-red) 8%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-red) 18%, transparent);
+        color: var(--color-integrax-red);
+    }
+
+    .gov-policy-icon--green {
+        background: color-mix(in oklab, #16a34a 8%, transparent);
+        border: 1px solid color-mix(in oklab, #16a34a 18%, transparent);
+        color: #16a34a;
+    }
+
+    .gov-policy-scope {
+        display: inline-block;
+        font-size: 0.575rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        padding: 0.18rem 0.6rem;
+        border-radius: 9999px;
+    }
+
+    .gov-policy-scope--blue {
+        color: var(--color-integrax-blue-glow);
+        background: color-mix(in oklab, var(--color-integrax-blue-pale) 75%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-glow) 22%, transparent);
+    }
+
+    .gov-policy-scope--red {
+        color: var(--color-integrax-red);
+        background: color-mix(in oklab, var(--color-integrax-red) 7%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-red) 20%, transparent);
+    }
+
+    .gov-policy-scope--green {
+        color: #16a34a;
+        background: color-mix(in oklab, #16a34a 7%, transparent);
+        border: 1px solid color-mix(in oklab, #16a34a 20%, transparent);
+    }
+
+    .gov-policy-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--color-integrax-blue);
+        line-height: 1.3;
+    }
+
+    .gov-policy-chevron {
+        color: color-mix(in oklab, var(--color-integrax-blue-glow) 40%, transparent);
+        transition: transform 0.3s ease, color 0.25s ease;
+    }
+
+    .gov-policy-card.is-open .gov-policy-chevron {
+        transform: rotate(180deg);
+        color: var(--color-integrax-blue-glow);
+    }
+
+    .gov-policy-expand {
+        overflow: hidden;
+    }
+
+    .gov-policy-desc {
+        padding: 0 1.25rem 1.25rem 1.25rem;
+        font-size: 0.85rem;
+        line-height: 1.72;
+        color: color-mix(in oklab, var(--color-integrax-blue) 62%, transparent);
+    }
+
+    /* ── Governance action cards ──────────────────────────── */
+
+    .gov-action-card {
+        position: relative;
+        padding: 2rem;
+        border-radius: 1.25rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-mid) 55%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 16%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        overflow: hidden;
+        transition: border-color 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    }
+
+    .gov-action-card:hover {
+        border-color: color-mix(in oklab, var(--color-integrax-blue-light) 32%, transparent);
+        transform: translateY(-4px);
+        box-shadow:
+            0 0 0 1px color-mix(in oklab, var(--color-integrax-blue-light) 12%, transparent),
+            0 16px 48px -12px rgba(10, 22, 40, 0.22),
+            0 0 36px -10px color-mix(in oklab, var(--color-integrax-blue-glow) 14%, transparent);
+    }
+
+    .gov-action-card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.25rem;
+        height: 3.25rem;
+        border-radius: 0.875rem;
+        margin-bottom: 1.5rem;
+        background: color-mix(in oklab, var(--color-integrax-blue-glow) 18%, transparent);
+        border: 1px solid color-mix(in oklab, var(--color-integrax-blue-light) 28%, transparent);
+        color: var(--color-integrax-blue-light);
+    }
+
+    .gov-action-card-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        color: #ffffff;
+        line-height: 1.25;
+        margin-bottom: 0.75rem;
+    }
+
+    .gov-action-card-desc {
+        font-size: 0.875rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.52);
+    }
+
+    .gov-action-card-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        opacity: 0;
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            var(--color-integrax-blue-glow) 40%,
+            var(--color-integrax-blue-light) 80%,
+            transparent 100%
+        );
+        transition: opacity 0.3s ease;
+    }
+
+    .gov-action-card:hover .gov-action-card-bar {
+        opacity: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .gov-hub-ring--outer,
+        .gov-hub-ring--mid {
+            animation: none;
+        }
+        .gov-principle-node,
+        .gov-action-card {
+            transition: none;
+        }
+    }
+
+}
+
+@keyframes gov-fade-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
