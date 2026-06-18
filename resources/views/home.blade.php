@@ -100,7 +100,7 @@
                 playsinline
                 poster="{{ asset('media/images/hero-poster.jpg') }}"
             >
-                <source src="{{ asset('media/videos/drone_footage.mp4') }}" type="video/mp4">
+                <source src="{{ asset('media/videos/drone_footage_web.mp4') }}" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-linear-to-r from-integrax-blue via-integrax-blue/75 to-integrax-blue/40"></div>
             <div class="absolute inset-0 bg-linear-to-t from-integrax-blue via-integrax-blue/30 to-transparent"></div>
