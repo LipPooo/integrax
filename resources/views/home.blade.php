@@ -98,7 +98,6 @@
                 muted
                 loop
                 playsinline
-                poster="{{ asset('media/images/hero-poster.jpg') }}"
             >
                 <source src="{{ asset('media/videos/drone_footage_web.mp4') }}" type="video/mp4">
             </video>
