@@ -93,7 +93,7 @@
     <section id="hero" class="section-tone-dark relative flex min-h-screen items-end overflow-hidden">
         <div class="hero-media absolute inset-0 scale-105 will-change-transform">
             <video
-                class="h-full w-full object-cover"
+                class="h-full w-full object-cover brightness-110 md:brightness-100"
                 autoplay
                 muted
                 loop
@@ -101,8 +101,8 @@
             >
                 <source src="https://pub-b4afda5e203f4d8385a8430f1539ed3e.r2.dev/drone_footage_web.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-linear-to-r from-integrax-blue via-integrax-blue/75 to-integrax-blue/40"></div>
-            <div class="absolute inset-0 bg-linear-to-t from-integrax-blue via-integrax-blue/30 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-r from-integrax-blue/60 via-integrax-blue/30 to-integrax-blue/10 md:from-integrax-blue md:via-integrax-blue/75 md:to-integrax-blue/40"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-integrax-blue/70 via-integrax-blue/15 to-transparent md:from-integrax-blue md:via-integrax-blue/30 md:to-transparent"></div>
             <div class="grain-overlay"></div>
         </div>
 
